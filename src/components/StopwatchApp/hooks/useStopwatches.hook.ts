@@ -9,6 +9,13 @@ export const useStopwatches = () => {
   const [stopwatches, setStopwatches] = useState<Stopwatch[]>([]);
   const [popupMessage, setPopupMessage] = useState<string>('');
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
+  const [popupTitle, setPopupTitle] = useState<string>('');
+  const [popupType, setPopupType] = useState<'success' | 'confirmation'>(
+    'success'
+  );
+  const [popupOnConfirm, setPopupOnConfirm] = useState<
+    (() => void) | undefined
+  >(undefined);
   const completedStopwatchesRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
@@ -51,7 +58,17 @@ export const useStopwatches = () => {
   };
 
   const removeStopwatch = (id: string) => {
-    setStopwatches(prev => prev.filter(stopwatch => stopwatch.id !== id));
+    const stopwatch = stopwatches.find(s => s.id === id);
+    if (stopwatch) {
+      setPopupTitle('Potwierdź usunięcie');
+      setPopupMessage(`Czy na pewno chcesz usunąć stoper "${stopwatch.name}"?`);
+      setPopupType('confirmation');
+      setPopupOnConfirm(() => () => {
+        setStopwatches(prev => prev.filter(stopwatch => stopwatch.id !== id));
+        closePopup();
+      });
+      setIsPopupVisible(true);
+    }
   };
 
   const pauseStopwatch = (id: string) => {
@@ -94,7 +111,10 @@ export const useStopwatches = () => {
             ? `Stoper "${newlyCompleted[0].name}" został zakończony!`
             : `${newlyCompleted.length} stoperów zostało zakończonych!`;
 
+        setPopupTitle('Stoper zakończony!');
         setPopupMessage(message);
+        setPopupType('success');
+        setPopupOnConfirm(undefined);
         setIsPopupVisible(true);
       }
     }, 1000);
@@ -105,6 +125,9 @@ export const useStopwatches = () => {
   const closePopup = () => {
     setIsPopupVisible(false);
     setPopupMessage('');
+    setPopupTitle('');
+    setPopupType('success');
+    setPopupOnConfirm(undefined);
   };
 
   return {
@@ -114,6 +137,9 @@ export const useStopwatches = () => {
     pauseStopwatch,
     resumeStopwatch,
     popupMessage,
+    popupTitle,
+    popupType,
+    popupOnConfirm,
     isPopupVisible,
     closePopup,
   };

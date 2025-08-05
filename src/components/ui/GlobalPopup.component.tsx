@@ -1,35 +1,50 @@
 import { useEffect } from 'react';
 
+export type PopupType = 'success' | 'confirmation' | 'warning' | 'error';
+
 interface GlobalPopupProps {
   isVisible: boolean;
+  title: string;
   message: string;
+  type?: PopupType;
   onClose: () => void;
+  onConfirm?: () => void;
+  confirmText?: string;
+  cancelText?: string;
   autoHideDuration?: number;
+  showAutoHide?: boolean;
 }
 
 export const GlobalPopup: React.FC<GlobalPopupProps> = ({
   isVisible,
+  title,
   message,
+  type = 'success',
   onClose,
+  onConfirm,
+  confirmText = 'OK',
+  cancelText = 'Anuluj',
   autoHideDuration = 5000,
+  showAutoHide = true,
 }) => {
   useEffect(() => {
-    if (isVisible && autoHideDuration > 0) {
+    if (isVisible && autoHideDuration > 0 && showAutoHide && !onConfirm) {
       const timer = setTimeout(() => {
         onClose();
       }, autoHideDuration);
 
       return () => clearTimeout(timer);
     }
-  }, [isVisible, autoHideDuration, onClose]);
+  }, [isVisible, autoHideDuration, onClose, showAutoHide, onConfirm]);
 
   if (!isVisible) return null;
 
-  return (
-    <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center p-4 z-[100] animate-popup-fade-in">
-      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-8 text-center">
-        <div className="mb-6">
-          <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+  const getTypeStyles = () => {
+    switch (type) {
+      case 'success':
+        return {
+          iconBg: 'bg-green-500',
+          icon: (
             <svg
               className="w-8 h-8 text-white"
               fill="none"
@@ -43,19 +58,121 @@ export const GlobalPopup: React.FC<GlobalPopupProps> = ({
                 d="M5 13l4 4L19 7"
               />
             </svg>
+          ),
+          buttonBg: 'bg-green-500 hover:bg-green-600',
+        };
+      case 'confirmation':
+        return {
+          iconBg: 'bg-blue-500',
+          icon: (
+            <svg
+              className="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          ),
+          buttonBg: 'bg-blue-500 hover:bg-blue-600',
+        };
+      case 'warning':
+        return {
+          iconBg: 'bg-yellow-500',
+          icon: (
+            <svg
+              className="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+              />
+            </svg>
+          ),
+          buttonBg: 'bg-yellow-500 hover:bg-yellow-600',
+        };
+      case 'error':
+        return {
+          iconBg: 'bg-red-500',
+          icon: (
+            <svg
+              className="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ),
+          buttonBg: 'bg-red-500 hover:bg-red-600',
+        };
+      default:
+        return {
+          iconBg: 'bg-blue-500',
+          icon: (
+            <svg
+              className="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          ),
+          buttonBg: 'bg-blue-500 hover:bg-blue-600',
+        };
+    }
+  };
+
+  const typeStyles = getTypeStyles();
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-8 text-center">
+        <div className="mb-6">
+          <div
+            className={`w-16 h-16 ${typeStyles.iconBg} rounded-full flex items-center justify-center mx-auto mb-4`}
+          >
+            {typeStyles.icon}
           </div>
-          <h2 className="text-2xl font-bold text-gray-900  mb-2">
-            Stoper zakończony!
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
           <p className="text-gray-600 text-lg">{message}</p>
         </div>
 
         <div className="flex gap-3 justify-center">
+          {onConfirm && (
+            <button
+              onClick={onClose}
+              className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium text-lg"
+            >
+              {cancelText}
+            </button>
+          )}
           <button
-            onClick={onClose}
-            className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 font-medium text-lg"
+            onClick={onConfirm || onClose}
+            className={`px-6 py-3 text-white rounded-lg transition-colors duration-200 font-medium text-lg ${typeStyles.buttonBg}`}
           >
-            OK
+            {confirmText}
           </button>
         </div>
       </div>

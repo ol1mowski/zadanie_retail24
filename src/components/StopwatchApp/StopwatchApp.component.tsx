@@ -5,7 +5,7 @@ import { useStopwatches } from './hooks/useStopwatches.hook';
 import { useModal } from './hooks/useModal.hook';
 import { AddStopwatchModal } from '../AddStopwatchModal';
 import { StopwatchGrid } from '../StopwatchGrid';
-import { GlobalPopup } from '../ui/GlobalPopup.component';
+import { GlobalPopup } from '../UI/GlobalPopup.component';
 
 export const StopwatchApp: React.FC = () => {
   const {
@@ -15,6 +15,9 @@ export const StopwatchApp: React.FC = () => {
     pauseStopwatch,
     resumeStopwatch,
     popupMessage,
+    popupTitle,
+    popupType,
+    popupOnConfirm,
     isPopupVisible,
     closePopup,
   } = useStopwatches();
@@ -42,8 +45,14 @@ export const StopwatchApp: React.FC = () => {
 
       <GlobalPopup
         isVisible={isPopupVisible}
+        title={popupTitle}
         message={popupMessage}
+        type={popupType}
         onClose={closePopup}
+        onConfirm={popupOnConfirm}
+        confirmText={popupType === 'confirmation' ? 'Usuń' : 'OK'}
+        cancelText="Anuluj"
+        showAutoHide={popupType === 'success'}
       />
     </AppContainer>
   );
