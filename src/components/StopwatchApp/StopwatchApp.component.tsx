@@ -4,7 +4,7 @@ import { AppMain } from './components/AppMain.component';
 import { useStopwatches } from './hooks/useStopwatches.hook';
 import { useModal } from './hooks/useModal.hook';
 import { AddStopwatchModal } from '../AddStopwatchModal';
-import StopwatchGrid from '../StopwatchGrid.component';
+import { StopwatchGrid } from '../StopwatchGrid';
 
 export const StopwatchApp: React.FC = () => {
   const {
