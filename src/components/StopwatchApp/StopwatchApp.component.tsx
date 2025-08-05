@@ -5,6 +5,7 @@ import { useStopwatches } from './hooks/useStopwatches.hook';
 import { useModal } from './hooks/useModal.hook';
 import { AddStopwatchModal } from '../AddStopwatchModal';
 import { StopwatchGrid } from '../StopwatchGrid';
+import { GlobalPopup } from '../ui/GlobalPopup.component';
 
 export const StopwatchApp: React.FC = () => {
   const {
@@ -13,6 +14,9 @@ export const StopwatchApp: React.FC = () => {
     removeStopwatch,
     pauseStopwatch,
     resumeStopwatch,
+    popupMessage,
+    isPopupVisible,
+    closePopup,
   } = useStopwatches();
 
   const { isOpen, openModal, closeModal } = useModal();
@@ -34,6 +38,12 @@ export const StopwatchApp: React.FC = () => {
         isOpen={isOpen}
         onClose={closeModal}
         onAdd={addStopwatch}
+      />
+
+      <GlobalPopup
+        isVisible={isPopupVisible}
+        message={popupMessage}
+        onClose={closePopup}
       />
     </AppContainer>
   );
