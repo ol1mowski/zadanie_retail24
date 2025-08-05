@@ -41,11 +41,7 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
 
       <button
         onClick={() => onRemove(id)}
-        className={`px-4 py-2 text-white rounded-lg transition-colors duration-200 text-sm font-medium ${
-          isCompleted
-            ? 'bg-gray-500 hover:bg-gray-600'
-            : 'bg-red-500 hover:bg-red-600'
-        }`}
+        className="px-4 py-2 text-white rounded-lg transition-colors duration-200 text-sm font-medium bg-red-500 hover:bg-red-600"
       >
         Usuń
       </button>
