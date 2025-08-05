@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { Stopwatch, StopwatchFormData } from '../types/stopwatch';
 import { generateStopwatchId } from '../utils/stopwatch.utils';
 import StopwatchGrid from './StopwatchGrid.component';
-import AddStopwatchModal from './AddStopwatchModal.component';
+import { AddStopwatchModal } from './AddStopwatchModal';
 
 const StopwatchApp: React.FC = () => {
   const [stopwatches, setStopwatches] = useState<Stopwatch[]>([]);
