@@ -4,6 +4,10 @@ import {
   generateStopwatchId,
   isStopwatchCompleted,
 } from '../../../utils/stopwatch.utils';
+import {
+  saveStopwatchesToCookies,
+  loadStopwatchesFromCookies,
+} from '../../../utils/cookies.utils';
 
 export const useStopwatches = () => {
   const [stopwatches, setStopwatches] = useState<Stopwatch[]>([]);
@@ -19,30 +23,36 @@ export const useStopwatches = () => {
   const completedStopwatchesRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
-    const sampleStopwatches: Stopwatch[] = [
-      {
-        id: '1',
-        name: 'Test - zakończy się za 5 sekund',
-        targetDate: new Date(Date.now() + 5 * 1000), // 5 sekund
-        status: 'active',
-        createdAt: new Date(),
-      },
-      {
-        id: '2',
-        name: 'Wakacje',
-        targetDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-        status: 'active',
-        createdAt: new Date(),
-      },
-      {
-        id: '3',
-        name: 'Deadline projektu',
-        targetDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-        status: 'paused',
-        createdAt: new Date(),
-      },
-    ];
-    setStopwatches(sampleStopwatches);
+    const savedStopwatches = loadStopwatchesFromCookies();
+
+    if (savedStopwatches.length > 0) {
+      setStopwatches(savedStopwatches);
+    } else {
+      const sampleStopwatches: Stopwatch[] = [
+        {
+          id: '1',
+          name: 'Test - zakończy się za 5 sekund',
+          targetDate: new Date(Date.now() + 5 * 1000),
+          status: 'active',
+          createdAt: new Date(),
+        },
+        {
+          id: '2',
+          name: 'Wakacje',
+          targetDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+          status: 'active',
+          createdAt: new Date(),
+        },
+        {
+          id: '3',
+          name: 'Deadline projektu',
+          targetDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          status: 'paused',
+          createdAt: new Date(),
+        },
+      ];
+      setStopwatches(sampleStopwatches);
+    }
   }, []);
 
   const addStopwatch = (data: StopwatchFormData) => {
@@ -54,7 +64,11 @@ export const useStopwatches = () => {
       createdAt: new Date(),
     };
 
-    setStopwatches(prev => [...prev, newStopwatch]);
+    setStopwatches(prev => {
+      const updatedStopwatches = [...prev, newStopwatch];
+      saveStopwatchesToCookies(updatedStopwatches);
+      return updatedStopwatches;
+    });
   };
 
   const removeStopwatch = (id: string) => {
@@ -64,7 +78,13 @@ export const useStopwatches = () => {
       setPopupMessage(`Czy na pewno chcesz usunąć stoper "${stopwatch.name}"?`);
       setPopupType('confirmation');
       setPopupOnConfirm(() => () => {
-        setStopwatches(prev => prev.filter(stopwatch => stopwatch.id !== id));
+        setStopwatches(prev => {
+          const updatedStopwatches = prev.filter(
+            stopwatch => stopwatch.id !== id
+          );
+          saveStopwatchesToCookies(updatedStopwatches);
+          return updatedStopwatches;
+        });
         closePopup();
       });
       setIsPopupVisible(true);
@@ -72,23 +92,27 @@ export const useStopwatches = () => {
   };
 
   const pauseStopwatch = (id: string) => {
-    setStopwatches(prev =>
-      prev.map(stopwatch =>
+    setStopwatches(prev => {
+      const updatedStopwatches = prev.map(stopwatch =>
         stopwatch.id === id
           ? { ...stopwatch, status: 'paused' as const }
           : stopwatch
-      )
-    );
+      );
+      saveStopwatchesToCookies(updatedStopwatches);
+      return updatedStopwatches;
+    });
   };
 
   const resumeStopwatch = (id: string) => {
-    setStopwatches(prev =>
-      prev.map(stopwatch =>
+    setStopwatches(prev => {
+      const updatedStopwatches = prev.map(stopwatch =>
         stopwatch.id === id
           ? { ...stopwatch, status: 'active' as const }
           : stopwatch
-      )
-    );
+      );
+      saveStopwatchesToCookies(updatedStopwatches);
+      return updatedStopwatches;
+    });
   };
 
   useEffect(() => {
