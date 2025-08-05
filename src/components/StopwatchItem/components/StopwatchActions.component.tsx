@@ -47,7 +47,7 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
             : 'bg-red-500 hover:bg-red-600'
         }`}
       >
-        {isCompleted ? 'Usuń' : 'Usuń'}
+        Usuń
       </button>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { StopwatchItemProps } from '../../types/stopwatch';
 import { isStopwatchCompleted } from '../../utils/stopwatch.utils';
 import { StopwatchCard } from './components/StopwatchCard.component';
@@ -14,9 +14,20 @@ export const StopwatchItem: React.FC<StopwatchItemProps> = ({
   onPause,
   onResume,
 }) => {
-  const [isCompleted] = useState<boolean>(isStopwatchCompleted(stopwatch));
+  const [isCompleted, setIsCompleted] = useState<boolean>(
+    isStopwatchCompleted(stopwatch)
+  );
 
   const isActive = stopwatch.status === 'active';
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const completed = isStopwatchCompleted(stopwatch);
+      setIsCompleted(completed);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [stopwatch]);
 
   return (
     <StopwatchCard status={stopwatch.status} isCompleted={isCompleted}>
