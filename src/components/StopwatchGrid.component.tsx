@@ -1,6 +1,6 @@
 import React from 'react';
 import type { StopwatchGridProps } from '../types/stopwatch';
-import StopwatchItem from './StopwatchItem.component';
+import { StopwatchItem } from './StopwatchItem';
 
 const StopwatchGrid: React.FC<StopwatchGridProps> = ({
   stopwatches,

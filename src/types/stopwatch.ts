@@ -1,7 +1,5 @@
-// Status stopera
 export type StopwatchStatus = 'active' | 'completed' | 'paused';
 
-// Główny interfejs stopera
 export interface Stopwatch {
   id: string;
   name: string;
@@ -11,13 +9,11 @@ export interface Stopwatch {
   completedAt?: Date;
 }
 
-// Dane formularza do dodawania stopera
 export interface StopwatchFormData {
   name: string;
   targetDate: Date;
 }
 
-// Props dla komponentów
 export interface StopwatchItemProps {
   stopwatch: Stopwatch;
   onRemove: (id: string) => void;
@@ -38,5 +34,4 @@ export interface AddStopwatchModalProps {
   onAdd: (data: StopwatchFormData) => void;
 }
 
-// Główny komponent aplikacji nie potrzebuje props
 export type StopwatchAppProps = Record<string, never>;

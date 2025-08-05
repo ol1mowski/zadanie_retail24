@@ -56,11 +56,20 @@ npm run type-check   # Sprawdzenie typów TypeScript
 
 ```
 src/
-├── components/          # Komponenty React
-│   ├── StopwatchApp.component.tsx      # Główny komponent aplikacji
-│   ├── StopwatchGrid.component.tsx     # Siatka stoperów
-│   ├── StopwatchItem.component.tsx     # Pojedynczy stoper
-│   └── AddStopwatchModal.component.tsx # Modal dodawania stopera
+├── components/                    # Komponenty React
+│   ├── StopwatchApp.component.tsx        # Główny komponent aplikacji
+│   ├── StopwatchGrid.component.tsx       # Siatka stoperów
+│   ├── AddStopwatchModal.component.tsx   # Modal dodawania stopera
+│   └── StopwatchItem/                    # Komponenty stopera (refactored)
+│       ├── index.ts                      # Eksport wszystkich komponentów
+│       ├── StopwatchItem.component.tsx   # Główny komponent stopera
+│       ├── StopwatchCard.component.tsx   # Karta stopera z logiką stylowania
+│       ├── StopwatchHeader.component.tsx # Nagłówek stopera (nazwa + data)
+│       ├── StopwatchTimer.component.tsx  # Odliczanie czasu
+│       ├── StopwatchActions.component.tsx # Przyciski akcji
+│       ├── StopwatchStatusBadge.component.tsx # Badge statusu
+│       ├── StopwatchCompletedMessage.component.tsx # Komunikat ukończenia
+│       └── StopwatchItem.test.tsx        # Testy komponentów stopera
 ├── types/              # Definicje typów TypeScript
 │   └── stopwatch.ts    # Typy dla stoperów
 ├── utils/              # Funkcje pomocnicze
@@ -87,6 +96,7 @@ src/
 - [x] Modal dodawania stoperów
 - [x] Komunikaty o ukończeniu stoperów
 - [x] Przykładowe dane do testowania UI
+- [x] Refactoring komponentów zgodnie z najlepszymi praktykami
 
 ### 🔄 W trakcie implementacji
 
@@ -108,8 +118,30 @@ Aplikacja wykorzystuje:
 Aplikacja zawiera testy jednostkowe dla:
 
 - Głównego komponentu aplikacji
+- Komponentów stopera (refactored)
 - Renderowania UI
 - Interakcji użytkownika
+
+## 🔧 Architektura Komponentów
+
+### StopwatchItem (Refactored)
+
+Komponent został podzielony na mniejsze, reużywalne części:
+
+- **StopwatchCard** - Kontener z logiką stylowania
+- **StopwatchHeader** - Nazwa i data docelowa
+- **StopwatchTimer** - Odliczanie czasu z useEffect
+- **StopwatchActions** - Przyciski akcji (wstrzymaj/wznów/usuń)
+- **StopwatchStatusBadge** - Badge statusu
+- **StopwatchCompletedMessage** - Komunikat ukończenia
+
+### Korzyści z Refactoringu
+
+- **Single Responsibility Principle** - Każdy komponent ma jedną odpowiedzialność
+- **Reużywalność** - Komponenty mogą być używane w innych miejscach
+- **Testowalność** - Łatwiejsze testowanie pojedynczych komponentów
+- **Czytelność** - Kod jest bardziej czytelny i zrozumiały
+- **Maintainability** - Łatwiejsze utrzymanie i modyfikacja
 
 ## 📝 Konwencje Commitów
 
