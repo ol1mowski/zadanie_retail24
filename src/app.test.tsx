@@ -3,13 +3,20 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
-  it('renders without crashing', () => {
+  it('renders stopwatch application', () => {
     render(<App />);
-    expect(screen.getByText(/vite \+ react/i)).toBeInTheDocument();
+    expect(screen.getByText('Aplikacja Stoperów')).toBeInTheDocument();
   });
 
-  it('displays counter', () => {
+  it('displays add stopwatch button', () => {
     render(<App />);
-    expect(screen.getByText(/count is 0/i)).toBeInTheDocument();
+    expect(screen.getByText('Dodaj stoper')).toBeInTheDocument();
+  });
+
+  it('shows statistics cards', () => {
+    render(<App />);
+    expect(screen.getByText('Aktywne')).toBeInTheDocument();
+    expect(screen.getByText('Wstrzymane')).toBeInTheDocument();
+    expect(screen.getByText('Ukończone')).toBeInTheDocument();
   });
 });
