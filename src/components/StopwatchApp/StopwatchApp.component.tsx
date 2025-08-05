@@ -5,7 +5,7 @@ import { useStopwatches } from './hooks/useStopwatches.hook';
 import { useModal } from './hooks/useModal.hook';
 import { AddStopwatchModal } from '../AddStopwatchModal';
 import { StopwatchGrid } from '../StopwatchGrid';
-import { GlobalPopup } from '../UI/GlobalPopup.component';
+import { GlobalPopup } from '../ui/GlobalPopup.component';
 
 export const StopwatchApp: React.FC = () => {
   const {
