@@ -8,6 +8,7 @@ export const StopwatchGrid: React.FC<StopwatchGridProps> = ({
   onRemove,
   onPause,
   onResume,
+  onShare,
 }) => {
   if (stopwatches.length === 0) {
     return <EmptyState />;
@@ -20,6 +21,7 @@ export const StopwatchGrid: React.FC<StopwatchGridProps> = ({
         onRemove={onRemove}
         onPause={onPause}
         onResume={onResume}
+        onShare={onShare}
       />
       <StopwatchCounter count={stopwatches.length} />
     </div>

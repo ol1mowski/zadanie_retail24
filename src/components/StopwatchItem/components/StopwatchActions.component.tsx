@@ -1,21 +1,26 @@
-import type { StopwatchStatus } from '../../../types/stopwatch';
+import type { Stopwatch, StopwatchStatus } from '../../../types/stopwatch';
+import { ExportLinkButton } from '../../ExportLinkButton/ExportLinkButton.component';
 
 interface StopwatchActionsProps {
   id: string;
   status: StopwatchStatus;
   isCompleted: boolean;
+  stopwatch: Stopwatch;
   onRemove: (id: string) => void;
   onPause: (id: string) => void;
   onResume: (id: string) => void;
+  onShare: (link: string) => void;
 }
 
 export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
   id,
   status,
   isCompleted,
+  stopwatch,
   onRemove,
   onPause,
   onResume,
+  onShare,
 }) => {
   return (
     <div className="flex gap-2 justify-center">
@@ -37,6 +42,10 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
             </button>
           )}
         </>
+      )}
+
+      {!isCompleted && (
+        <ExportLinkButton stopwatch={stopwatch} onShare={onShare} />
       )}
 
       <button

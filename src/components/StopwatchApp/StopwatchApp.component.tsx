@@ -24,6 +24,10 @@ export const StopwatchApp: React.FC = () => {
 
   const { isOpen, openModal, closeModal } = useModal();
 
+  const handleShare = (link: string) => {
+    console.log('Udostępniony link:', link);
+  };
+
   return (
     <AppContainer>
       <AppHeader onAddStopwatch={openModal} />
@@ -34,6 +38,7 @@ export const StopwatchApp: React.FC = () => {
           onRemove={removeStopwatch}
           onPause={pauseStopwatch}
           onResume={resumeStopwatch}
+          onShare={handleShare}
         />
       </AppMain>
 

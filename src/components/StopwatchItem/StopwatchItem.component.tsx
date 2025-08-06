@@ -13,6 +13,7 @@ export const StopwatchItem: React.FC<StopwatchItemProps> = ({
   onRemove,
   onPause,
   onResume,
+  onShare,
 }) => {
   const [isCompleted, setIsCompleted] = useState<boolean>(
     isStopwatchCompleted(stopwatch)
@@ -51,9 +52,11 @@ export const StopwatchItem: React.FC<StopwatchItemProps> = ({
         id={stopwatch.id}
         status={stopwatch.status}
         isCompleted={isCompleted}
+        stopwatch={stopwatch}
         onRemove={onRemove}
         onPause={onPause}
         onResume={onResume}
+        onShare={onShare}
       />
 
       <StopwatchCompletedMessage isCompleted={isCompleted} />

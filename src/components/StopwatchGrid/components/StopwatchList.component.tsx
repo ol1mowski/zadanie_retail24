@@ -6,6 +6,7 @@ export const StopwatchList: React.FC<StopwatchGridProps> = ({
   onRemove,
   onPause,
   onResume,
+  onShare,
 }) => {
   return (
     <div className="w-full">
@@ -15,6 +16,7 @@ export const StopwatchList: React.FC<StopwatchGridProps> = ({
             {stopwatches.map(stopwatch => (
               <StopwatchItem
                 key={stopwatch.id}
+                onShare={onShare}
                 stopwatch={stopwatch}
                 onRemove={onRemove}
                 onPause={onPause}

@@ -19,6 +19,7 @@ export interface StopwatchItemProps {
   onRemove: (id: string) => void;
   onPause: (id: string) => void;
   onResume: (id: string) => void;
+  onShare: (link: string) => void;
 }
 
 export interface StopwatchGridProps {
@@ -26,6 +27,7 @@ export interface StopwatchGridProps {
   onRemove: (id: string) => void;
   onPause: (id: string) => void;
   onResume: (id: string) => void;
+  onShare: (link: string) => void;
 }
 
 export interface AddStopwatchModalProps {
