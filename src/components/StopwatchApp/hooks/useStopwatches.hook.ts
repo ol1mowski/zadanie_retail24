@@ -14,12 +14,13 @@ export const useStopwatches = () => {
   const [popupMessage, setPopupMessage] = useState<string>('');
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
   const [popupTitle, setPopupTitle] = useState<string>('');
-  const [popupType, setPopupType] = useState<'success' | 'confirmation'>(
-    'success'
-  );
+  const [popupType, setPopupType] = useState<
+    'success' | 'confirmation' | 'share'
+  >('success');
   const [popupOnConfirm, setPopupOnConfirm] = useState<
     (() => void) | undefined
   >(undefined);
+  const [shareLink, setShareLink] = useState<string>('');
   const completedStopwatchesRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
@@ -115,6 +116,15 @@ export const useStopwatches = () => {
     });
   };
 
+  const shareStopwatch = (link: string) => {
+    setPopupTitle('Udostępnij stoper');
+    setPopupMessage('Skopiuj link poniżej, aby udostępnić stoper:');
+    setPopupType('share');
+    setShareLink(link);
+    setPopupOnConfirm(undefined);
+    setIsPopupVisible(true);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       const newlyCompleted: Stopwatch[] = [];
@@ -152,6 +162,7 @@ export const useStopwatches = () => {
     setPopupTitle('');
     setPopupType('success');
     setPopupOnConfirm(undefined);
+    setShareLink('');
   };
 
   return {
@@ -160,10 +171,12 @@ export const useStopwatches = () => {
     removeStopwatch,
     pauseStopwatch,
     resumeStopwatch,
+    shareStopwatch,
     popupMessage,
     popupTitle,
     popupType,
     popupOnConfirm,
+    shareLink,
     isPopupVisible,
     closePopup,
   };

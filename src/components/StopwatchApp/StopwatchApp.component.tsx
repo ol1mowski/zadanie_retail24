@@ -14,10 +14,12 @@ export const StopwatchApp: React.FC = () => {
     removeStopwatch,
     pauseStopwatch,
     resumeStopwatch,
+    shareStopwatch,
     popupMessage,
     popupTitle,
     popupType,
     popupOnConfirm,
+    shareLink,
     isPopupVisible,
     closePopup,
   } = useStopwatches();
@@ -25,7 +27,7 @@ export const StopwatchApp: React.FC = () => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const handleShare = (link: string) => {
-    console.log('Udostępniony link:', link);
+    shareStopwatch(link);
   };
 
   return (
@@ -58,6 +60,7 @@ export const StopwatchApp: React.FC = () => {
         confirmText={popupType === 'confirmation' ? 'Usuń' : 'OK'}
         cancelText="Anuluj"
         showAutoHide={popupType === 'success'}
+        shareLink={shareLink}
       />
     </AppContainer>
   );
