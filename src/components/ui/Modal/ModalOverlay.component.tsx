@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface ModalOverlayProps {
   children: React.ReactNode;
 }

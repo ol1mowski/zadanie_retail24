@@ -3,9 +3,7 @@ import type {
   AddStopwatchModalProps,
   StopwatchFormData,
 } from '../../types/stopwatch';
-import { ModalOverlay } from './components/ModalOverlay.component';
-import { ModalContainer } from './components/ModalContainer.component';
-import { ModalHeader } from './components/ModalHeader.component';
+import { ModalOverlay, ModalContainer, ModalHeader } from '../ui';
 import { StopwatchForm } from './components/StopwatchForm.component';
 
 export const AddStopwatchModal: React.FC<AddStopwatchModalProps> = ({

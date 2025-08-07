@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import type { StopwatchFormData } from '../../../types/stopwatch';
 import { validateStopwatchData } from '../../../utils/stopwatch.utils';
-import { FormField } from './FormField.component';
+import { FormField, FormActions } from '../../ui';
 import { ErrorMessage } from '../../ui/ErrorMessage.component';
 import { FormPreview } from './FormPreview.component';
-import { FormActions } from './FormActions.component';
 
 interface StopwatchFormProps {
   formData: StopwatchFormData;
