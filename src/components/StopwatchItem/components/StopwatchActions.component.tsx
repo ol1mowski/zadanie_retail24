@@ -1,5 +1,5 @@
 import type { Stopwatch, StopwatchStatus } from '../../../types/stopwatch';
-import { ExportLinkButton } from '../../ExportLinkButton/ExportLinkButton.component';
+import { ExportLinkButton } from '../../ui/ExportLinkButton.component';
 
 interface StopwatchActionsProps {
   id: string;

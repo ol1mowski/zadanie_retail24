@@ -1,5 +1,5 @@
 import type { Stopwatch } from '../../../types/stopwatch';
-import { StatisticsSection } from './StatisticsSection.component';
+import { StatisticsSection } from '../../StatisticsSection/StatisticsSection.component';
 
 interface AppMainProps {
   stopwatches: Stopwatch[];

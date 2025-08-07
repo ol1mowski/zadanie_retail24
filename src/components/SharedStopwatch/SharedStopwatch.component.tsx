@@ -31,6 +31,15 @@ export const SharedStopwatch: React.FC = () => {
     }
   }, [sharedStopwatch]);
 
+  const closePopup = useCallback(() => {
+    setIsPopupVisible(false);
+    setPopupMessage('');
+    setPopupTitle('');
+    setPopupType('success');
+    setPopupOnConfirm(undefined);
+    setShareLink('');
+  }, []);
+
   const handleRemoveStopwatch = useCallback(() => {
     if (!sharedStopwatch) return;
 
@@ -49,7 +58,7 @@ export const SharedStopwatch: React.FC = () => {
       closePopup();
     });
     setIsPopupVisible(true);
-  }, [sharedStopwatch, navigate]);
+  }, [sharedStopwatch, navigate, closePopup]);
 
   const handlePauseStopwatch = useCallback(() => {
     if (!localStopwatch) return;
@@ -93,15 +102,6 @@ export const SharedStopwatch: React.FC = () => {
     setShareLink(link);
     setIsPopupVisible(true);
   }, [localStopwatch]);
-
-  const closePopup = useCallback(() => {
-    setIsPopupVisible(false);
-    setPopupMessage('');
-    setPopupTitle('');
-    setPopupType('success');
-    setPopupOnConfirm(undefined);
-    setShareLink('');
-  }, []);
 
   if (isLoading) {
     return (
