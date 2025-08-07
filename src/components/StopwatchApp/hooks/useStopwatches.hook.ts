@@ -35,23 +35,23 @@ export const useStopwatches = () => {
       const sampleStopwatches: Stopwatch[] = [
         {
           id: '1',
-          name: 'Test - zakończy się za 5 sekund',
-          targetDate: new Date(Date.now() + 5 * 1000),
-          status: 'active',
-          createdAt: new Date(),
-        },
-        {
-          id: '2',
           name: 'Wakacje',
           targetDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
           status: 'active',
           createdAt: new Date(),
         },
         {
-          id: '3',
+          id: '2',
           name: 'Deadline projektu',
           targetDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
           status: 'paused',
+          createdAt: new Date(),
+        },
+        {
+          id: '3',
+          name: 'Mecz',
+          targetDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+          status: 'active',
           createdAt: new Date(),
         },
       ];
