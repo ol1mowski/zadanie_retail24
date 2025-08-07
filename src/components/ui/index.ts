@@ -1,4 +1,4 @@
-export { GlobalPopup } from './GlobalPopup.component';
+export { GlobalPopup, type PopupType } from './GlobalPopup';
 export { ErrorMessage } from './ErrorMessage.component';
 export { LoadingSpinner } from './LoadingSpinner.component';
 export { FormField } from './Form/FormField.component';
