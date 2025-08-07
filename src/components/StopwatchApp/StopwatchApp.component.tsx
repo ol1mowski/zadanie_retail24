@@ -1,6 +1,7 @@
 import { Layout } from '../Layout/Layout.component';
 import { useStopwatches } from './hooks/useStopwatches.hook';
 import { StopwatchGrid } from '../StopwatchGrid';
+import { SEO } from '../ui';
 
 export const StopwatchApp: React.FC = () => {
   const {
@@ -24,27 +25,39 @@ export const StopwatchApp: React.FC = () => {
   };
 
   return (
-    <Layout
-      stopwatches={stopwatches}
-      showModal={true}
-      onAddStopwatchModal={addStopwatch}
-      popupProps={{
-        isVisible: isPopupVisible,
-        title: popupTitle,
-        message: popupMessage,
-        type: popupType,
-        onClose: closePopup,
-        onConfirm: popupOnConfirm,
-        shareLink,
-      }}
-    >
-      <StopwatchGrid
-        stopwatches={stopwatches}
-        onRemove={removeStopwatch}
-        onPause={pauseStopwatch}
-        onResume={resumeStopwatch}
-        onShare={handleShare}
+    <>
+      <SEO
+        title="Aplikacja Stoperów - Zarządzaj swoimi stoperami"
+        description="Aplikacja do zarządzania stoperami. Twórz, wstrzymuj, wznawiaj i udostępniaj swoje stoperów z innymi użytkownikami."
+        keywords="stoper, timer, aplikacja, zarządzanie czasem, udostępnianie"
+        ogTitle="Aplikacja Stoperów"
+        ogDescription="Zarządzaj swoimi stoperami i udostępniaj je z innymi użytkownikami."
+        ogUrl={window.location.origin}
+        twitterTitle="Aplikacja Stoperów"
+        twitterDescription="Zarządzaj swoimi stoperami i udostępniaj je z innymi użytkownikami."
       />
-    </Layout>
+      <Layout
+        stopwatches={stopwatches}
+        showModal={true}
+        onAddStopwatchModal={addStopwatch}
+        popupProps={{
+          isVisible: isPopupVisible,
+          title: popupTitle,
+          message: popupMessage,
+          type: popupType,
+          onClose: closePopup,
+          onConfirm: popupOnConfirm,
+          shareLink,
+        }}
+      >
+        <StopwatchGrid
+          stopwatches={stopwatches}
+          onRemove={removeStopwatch}
+          onPause={pauseStopwatch}
+          onResume={resumeStopwatch}
+          onShare={handleShare}
+        />
+      </Layout>
+    </>
   );
 };
