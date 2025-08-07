@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Layout } from '../Layout/Layout.component';
 import { useSharedStopwatch } from '../StopwatchApp/hooks/useSharedStopwatch.hook';
 import { StopwatchItem } from '../StopwatchItem';
-import { GlobalPopup, ErrorMessage } from '../ui';
+import { GlobalPopup, ErrorMessage, LoadingSpinner } from '../ui';
 import { generateShareLink } from '../../utils/share.utils';
 import {
   saveStopwatchesToCookies,
@@ -105,14 +105,10 @@ export const SharedStopwatch: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <div className="text-gray-600 text-lg">
-            Ładowanie udostępnionego stopera...
-          </div>
-        </div>
-      </div>
+      <LoadingSpinner
+        text="Ładowanie udostępnionego stopera..."
+        fullScreen={true}
+      />
     );
   }
 
