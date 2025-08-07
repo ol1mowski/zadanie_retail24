@@ -1,6 +1,6 @@
 export { GlobalPopup, type PopupType } from './GlobalPopup';
 export { ErrorMessage, type ErrorType } from './ErrorMessage';
-export { LoadingSpinner } from './LoadingSpinner.component';
+export { LoadingSpinner } from './LoadingSpinner/LoadingSpinner.component';
 export {
   Button,
   type ButtonVariant,
