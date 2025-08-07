@@ -1,5 +1,5 @@
 export { GlobalPopup, type PopupType } from './GlobalPopup';
-export { ErrorMessage } from './ErrorMessage.component';
+export { ErrorMessage, type ErrorType } from './ErrorMessage';
 export { LoadingSpinner } from './LoadingSpinner.component';
 export { FormField } from './Form/FormField.component';
 export { FormActions } from './Form/FormActions.component';
