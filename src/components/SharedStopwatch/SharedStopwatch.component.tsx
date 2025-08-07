@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Layout } from '../Layout/Layout.component';
 import { useSharedStopwatch } from './hooks/useSharedStopwatch.hook';
 import { StopwatchItem } from '../StopwatchItem';
-import { GlobalPopup, ErrorMessage, LoadingSpinner } from '../ui';
+import { GlobalPopup, ErrorMessage, LoadingSpinner, Button } from '../ui';
 import { generateShareLink } from '../../utils/share.utils';
 import {
   saveStopwatchesToCookies,
@@ -143,18 +143,18 @@ export const SharedStopwatch: React.FC = () => {
           />
 
           <div className="flex gap-3 justify-center">
-            <button
+            <Button
               onClick={() => navigate('/')}
               className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
             >
               Przejdź do głównej aplikacji
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => window.history.back()}
               className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"
             >
               Wróć do poprzedniej strony
-            </button>
+            </Button>
           </div>
         </div>
       </Layout>
@@ -178,12 +178,12 @@ export const SharedStopwatch: React.FC = () => {
           />
 
           <div className="flex justify-center">
-            <button
+            <Button
               onClick={() => navigate('/')}
               className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
             >
               Przejdź do głównej aplikacji
-            </button>
+            </Button>
           </div>
         </div>
       </Layout>
