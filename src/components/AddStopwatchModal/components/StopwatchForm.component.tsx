@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { StopwatchFormData } from '../../../types/stopwatch';
 import { validateStopwatchData } from '../../../utils/stopwatch.utils';
 import { FormField } from './FormField.component';
-import { ValidationErrors } from './ValidationErrors.component';
+import { ErrorMessage } from '../../ui/ErrorMessage.component';
 import { FormPreview } from './FormPreview.component';
 import { FormActions } from './FormActions.component';
 
@@ -76,7 +76,16 @@ export const StopwatchForm: React.FC<StopwatchFormProps> = ({
         disabled={isSubmitting}
       />
 
-      <ValidationErrors errors={errors} />
+      {errors.length > 0 && (
+        <div className="mb-6">
+          <ErrorMessage
+            title="Błędy walidacji"
+            message={errors.join('. ')}
+            type="error"
+            showIcon={false}
+          />
+        </div>
+      )}
 
       <FormPreview formData={formData} />
 

@@ -167,19 +167,30 @@ export const SharedStopwatch: React.FC = () => {
 
   if (!sharedStopwatch) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-gray-600 text-lg mb-4">
-            Nie znaleziono stopera
+      <Layout
+        title="Nie znaleziono stopera"
+        subtitle="Podany stoper nie istnieje lub został usunięty"
+        showAddButton={false}
+      >
+        <div className="max-w-2xl mx-auto px-4 py-8">
+          <ErrorMessage
+            title="Nie znaleziono stopera"
+            message="Podany stoper nie istnieje lub został usunięty. Sprawdź link lub skontaktuj się z osobą, która go udostępniła."
+            type="warning"
+            onClose={() => navigate('/')}
+            className="mb-6"
+          />
+
+          <div className="flex justify-center">
+            <button
+              onClick={() => navigate('/')}
+              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+            >
+              Przejdź do głównej aplikacji
+            </button>
           </div>
-          <button
-            onClick={() => navigate('/')}
-            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            Przejdź do głównej aplikacji
-          </button>
         </div>
-      </div>
+      </Layout>
     );
   }
 
