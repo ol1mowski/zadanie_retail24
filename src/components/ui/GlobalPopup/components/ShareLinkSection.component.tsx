@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FormField } from '../../Form/FormField.component';
+import { Button } from '../../Button/Button.component';
 
 interface ShareLinkSectionProps {
   shareLink: string;
@@ -36,7 +37,7 @@ export const ShareLinkSection: React.FC<ShareLinkSectionProps> = ({
               disabled={true}
             />
           </div>
-          <button
+          <Button
             onClick={handleCopy}
             className={`px-4 py-2 text-white text-sm rounded-lg transition-all duration-200 font-medium flex items-center gap-2 ${
               isCopied
@@ -81,7 +82,7 @@ export const ShareLinkSection: React.FC<ShareLinkSectionProps> = ({
                 Kopiuj
               </>
             )}
-          </button>
+          </Button>
         </div>
         <div className="text-xs text-gray-500 text-center">
           Link będzie aktywny przez 30 dni

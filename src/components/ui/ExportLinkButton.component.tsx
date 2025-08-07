@@ -1,5 +1,6 @@
 import { generateShareLink } from '../../utils/share.utils';
 import type { Stopwatch } from '../../types/stopwatch.type';
+import { Button } from './Button/Button.component';
 
 interface ExportLinkButtonProps {
   stopwatch: Stopwatch;
@@ -18,7 +19,7 @@ export const ExportLinkButton: React.FC<ExportLinkButtonProps> = ({
   };
 
   return (
-    <button
+    <Button
       onClick={handleShare}
       className={`px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all duration-200 text-sm font-medium flex items-center gap-2 ${className}`}
       title={`Udostępnij stoper "${stopwatch.name}"`}
@@ -39,6 +40,6 @@ export const ExportLinkButton: React.FC<ExportLinkButtonProps> = ({
         />
       </svg>
       <span>Udostępnij</span>
-    </button>
+    </Button>
   );
 };
