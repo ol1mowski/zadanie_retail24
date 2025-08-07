@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { StopwatchFormData } from '../../../types/stopwatch.type';
 import { validateStopwatchData } from '../../../utils/stopwatch.utils';
 import { FormField, FormActions } from '../../ui';
-import { ErrorMessage } from '../../ui/ErrorMessage.component';
+import { ErrorMessage } from '../../ui/ErrorMessage';
 import { FormPreview } from './FormPreview.component';
 
 interface StopwatchFormProps {

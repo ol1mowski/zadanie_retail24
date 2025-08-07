@@ -1,6 +1,6 @@
 import { Header } from '../Header/Header.component';
 import { AddStopwatchModal } from '../AddStopwatchModal';
-import { GlobalPopup } from '../ui/GlobalPopup.component';
+import { GlobalPopup } from '../ui/GlobalPopup';
 import { useModal } from './hooks/useModal.hook';
 import { StatisticsSection } from '../StatisticsSection/StatisticsSection.component';
 import type { Stopwatch, StopwatchFormData } from '../../types/stopwatch.type';
