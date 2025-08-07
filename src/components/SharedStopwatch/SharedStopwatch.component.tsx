@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../Layout/Layout.component';
-import { useSharedStopwatch } from '../StopwatchApp/hooks/useSharedStopwatch.hook';
+import { useSharedStopwatch } from './hooks/useSharedStopwatch.hook';
 import { StopwatchItem } from '../StopwatchItem';
 import { GlobalPopup, ErrorMessage, LoadingSpinner } from '../ui';
 import { generateShareLink } from '../../utils/share.utils';

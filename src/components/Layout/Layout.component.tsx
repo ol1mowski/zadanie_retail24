@@ -1,8 +1,8 @@
 import { Header } from '../Header/Header.component';
-import { AppMain } from '../StopwatchApp/components/AppMain.component';
 import { AddStopwatchModal } from '../AddStopwatchModal';
 import { GlobalPopup } from '../ui/GlobalPopup.component';
-import { useModal } from '../StopwatchApp/hooks/useModal.hook';
+import { useModal } from './hooks/useModal.hook';
+import { StatisticsSection } from '../StatisticsSection/StatisticsSection.component';
 import type { Stopwatch, StopwatchFormData } from '../../types/stopwatch';
 
 interface LayoutProps {
@@ -61,7 +61,10 @@ export const Layout: React.FC<LayoutProps> = ({
 
       <main className="flex-1">
         {stopwatches ? (
-          <AppMain stopwatches={stopwatches}>{children}</AppMain>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <StatisticsSection stopwatches={stopwatches} />
+            {children}
+          </div>
         ) : (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {children}
