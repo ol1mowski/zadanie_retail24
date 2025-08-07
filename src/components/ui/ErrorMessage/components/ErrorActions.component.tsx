@@ -1,3 +1,5 @@
+import { Button } from '../../Button/Button.component';
+
 interface ErrorActionsProps {
   onRetry?: () => void;
   onClose?: () => void;
@@ -12,20 +14,14 @@ export const ErrorActions: React.FC<ErrorActionsProps> = ({
   return (
     <div className="flex gap-2 mt-3">
       {onRetry && (
-        <button
-          onClick={onRetry}
-          className="px-3 py-1 text-xs font-medium rounded bg-white border border-current hover:bg-opacity-10 transition-colors"
-        >
+        <Button variant="ghost" size="sm" onClick={onRetry}>
           Spróbuj ponownie
-        </button>
+        </Button>
       )}
       {onClose && (
-        <button
-          onClick={onClose}
-          className="px-3 py-1 text-xs font-medium rounded bg-white border border-current hover:bg-opacity-10 transition-colors"
-        >
+        <Button variant="ghost" size="sm" onClick={onClose}>
           Zamknij
-        </button>
+        </Button>
       )}
     </div>
   );

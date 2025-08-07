@@ -1,4 +1,4 @@
-import React from 'react';
+import { Button } from '../Button/Button.component';
 
 interface FormActionsProps {
   onCancel: () => void;
@@ -15,21 +15,22 @@ export const FormActions: React.FC<FormActionsProps> = ({
 }) => {
   return (
     <div className="flex gap-3 justify-end">
-      <button
+      <Button
         type="button"
+        variant="ghost"
         onClick={onCancel}
-        className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200 font-medium"
         disabled={isSubmitting}
       >
         {cancelText}
-      </button>
-      <button
+      </Button>
+      <Button
         type="submit"
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+        variant="primary"
+        isLoading={isSubmitting}
         disabled={isSubmitting}
       >
         {submitText}
-      </button>
+      </Button>
     </div>
   );
 };

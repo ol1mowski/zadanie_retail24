@@ -1,3 +1,4 @@
+import { Button } from '../../Button/Button.component';
 import type { PopupType } from './PopupIcon.component';
 
 interface PopupActionsProps {
@@ -15,43 +16,42 @@ export const PopupActions: React.FC<PopupActionsProps> = ({
   confirmText = 'OK',
   cancelText = 'Anuluj',
 }) => {
-  const getButtonStyles = () => {
+  const getButtonVariant = ():
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'info'
+    | 'primary' => {
     switch (type) {
       case 'success':
-        return 'bg-green-500 hover:bg-green-600';
+        return 'success';
       case 'confirmation':
-        return 'bg-blue-500 hover:bg-blue-600';
+        return 'primary';
       case 'warning':
-        return 'bg-yellow-500 hover:bg-yellow-600';
+        return 'warning';
       case 'error':
-        return 'bg-red-500 hover:bg-red-600';
+        return 'error';
       case 'share':
-        return 'bg-purple-500 hover:bg-purple-600';
+        return 'info';
       case 'import':
-        return 'bg-green-500 hover:bg-green-600';
+        return 'success';
       default:
-        return 'bg-blue-500 hover:bg-blue-600';
+        return 'primary';
     }
   };
 
-  const buttonStyles = getButtonStyles();
+  const buttonVariant = getButtonVariant();
 
   return (
     <div className="flex gap-3 justify-center">
       {onConfirm && (
-        <button
-          onClick={onClose}
-          className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium text-lg"
-        >
+        <Button variant="secondary" size="lg" onClick={onClose}>
           {cancelText}
-        </button>
+        </Button>
       )}
-      <button
-        onClick={onConfirm || onClose}
-        className={`px-6 py-3 text-white rounded-lg transition-colors duration-200 font-medium text-lg ${buttonStyles}`}
-      >
+      <Button variant={buttonVariant} size="lg" onClick={onConfirm || onClose}>
         {type === 'share' ? 'Zamknij' : confirmText}
-      </button>
+      </Button>
     </div>
   );
 };
