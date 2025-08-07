@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '../Button/Button.component';
 
 interface ModalHeaderProps {
   title: string;
@@ -14,10 +15,12 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
   return (
     <div className="flex items-center justify-between p-6 border-b border-gray-200">
       <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
-      <button
+      <Button
+        variant="ghost"
+        size="sm"
         onClick={onClose}
-        className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
         disabled={isSubmitting}
+        className="text-gray-400 hover:text-gray-600 p-1"
       >
         <svg
           className="w-6 h-6"
@@ -32,7 +35,7 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
             d="M6 18L18 6M6 6l12 12"
           />
         </svg>
-      </button>
+      </Button>
     </div>
   );
 };

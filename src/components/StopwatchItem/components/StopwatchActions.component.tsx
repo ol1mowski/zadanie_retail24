@@ -1,5 +1,6 @@
 import type { Stopwatch, StopwatchStatus } from '../../../types/stopwatch.type';
 import { ExportLinkButton } from '../../ui/ExportLinkButton.component';
+import { Button } from '../../ui/Button/Button.component';
 
 interface StopwatchActionsProps {
   id: string;
@@ -39,19 +40,13 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
       {!isCompleted && (
         <>
           {status === 'active' ? (
-            <button
-              onClick={() => onPause(id)}
-              className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors duration-200 text-sm font-medium"
-            >
+            <Button variant="warning" size="sm" onClick={() => onPause(id)}>
               Wstrzymaj
-            </button>
+            </Button>
           ) : (
-            <button
-              onClick={() => onResume(id)}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 text-sm font-medium"
-            >
+            <Button variant="success" size="sm" onClick={() => onResume(id)}>
               Wznów
-            </button>
+            </Button>
           )}
         </>
       )}
@@ -60,12 +55,9 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
         <ExportLinkButton stopwatch={stopwatch} onShare={onShare} />
       )}
 
-      <button
-        onClick={() => onRemove(id)}
-        className="px-4 py-2 text-white rounded-lg transition-colors duration-200 text-sm font-medium bg-red-500 hover:bg-red-600"
-      >
+      <Button variant="error" size="sm" onClick={() => onRemove(id)}>
         Usuń
-      </button>
+      </Button>
     </div>
   );
 };
