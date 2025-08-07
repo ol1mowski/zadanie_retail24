@@ -1,12 +1,107 @@
-import React from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../Layout/Layout.component';
 import { useSharedStopwatch } from '../StopwatchApp/hooks/useSharedStopwatch.hook';
 import { StopwatchItem } from '../StopwatchItem';
+import { GlobalPopup } from '../ui/GlobalPopup.component';
+import { generateShareLink } from '../../utils/share.utils';
+import {
+  saveStopwatchesToCookies,
+  loadStopwatchesFromCookies,
+} from '../../utils/cookies.utils';
 
 export const SharedStopwatch: React.FC = () => {
   const navigate = useNavigate();
   const { sharedStopwatch, isLoading, error, errorType } = useSharedStopwatch();
+  const [localStopwatch, setLocalStopwatch] = useState(sharedStopwatch);
+  const [popupMessage, setPopupMessage] = useState<string>('');
+  const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
+  const [popupTitle, setPopupTitle] = useState<string>('');
+  const [popupType, setPopupType] = useState<
+    'success' | 'confirmation' | 'share'
+  >('success');
+  const [popupOnConfirm, setPopupOnConfirm] = useState<
+    (() => void) | undefined
+  >(undefined);
+  const [shareLink, setShareLink] = useState<string>('');
+
+  useEffect(() => {
+    if (sharedStopwatch) {
+      setLocalStopwatch(sharedStopwatch);
+    }
+  }, [sharedStopwatch]);
+
+  const handleRemoveStopwatch = useCallback(() => {
+    if (!sharedStopwatch) return;
+
+    setPopupTitle('Potwierdź usunięcie');
+    setPopupMessage(
+      `Czy na pewno chcesz usunąć stoper "${sharedStopwatch.name}"?`
+    );
+    setPopupType('confirmation');
+    setPopupOnConfirm(() => () => {
+      const savedStopwatches = loadStopwatchesFromCookies();
+      const updatedStopwatches = savedStopwatches.filter(
+        stopwatch => stopwatch.id !== sharedStopwatch.id
+      );
+      saveStopwatchesToCookies(updatedStopwatches);
+      navigate('/');
+      closePopup();
+    });
+    setIsPopupVisible(true);
+  }, [sharedStopwatch, navigate]);
+
+  const handlePauseStopwatch = useCallback(() => {
+    if (!localStopwatch) return;
+
+    const savedStopwatches = loadStopwatchesFromCookies();
+    const updatedStopwatches = savedStopwatches.map(stopwatch =>
+      stopwatch.id === localStopwatch.id
+        ? { ...stopwatch, status: 'paused' as const }
+        : stopwatch
+    );
+    saveStopwatchesToCookies(updatedStopwatches);
+
+    setLocalStopwatch(prev =>
+      prev ? { ...prev, status: 'paused' as const } : null
+    );
+  }, [localStopwatch]);
+
+  const handleResumeStopwatch = useCallback(() => {
+    if (!localStopwatch) return;
+
+    const savedStopwatches = loadStopwatchesFromCookies();
+    const updatedStopwatches = savedStopwatches.map(stopwatch =>
+      stopwatch.id === localStopwatch.id
+        ? { ...stopwatch, status: 'active' as const }
+        : stopwatch
+    );
+    saveStopwatchesToCookies(updatedStopwatches);
+
+    setLocalStopwatch(prev =>
+      prev ? { ...prev, status: 'active' as const } : null
+    );
+  }, [localStopwatch]);
+
+  const handleShareStopwatch = useCallback(() => {
+    if (!localStopwatch) return;
+
+    const link = generateShareLink(localStopwatch);
+    setPopupTitle('Udostępnij stoper');
+    setPopupMessage('Link został wygenerowany. Skopiuj go i wyślij znajomym:');
+    setPopupType('share');
+    setShareLink(link);
+    setIsPopupVisible(true);
+  }, [localStopwatch]);
+
+  const closePopup = useCallback(() => {
+    setIsPopupVisible(false);
+    setPopupMessage('');
+    setPopupTitle('');
+    setPopupType('success');
+    setPopupOnConfirm(undefined);
+    setShareLink('');
+  }, []);
 
   if (isLoading) {
     return (
@@ -140,43 +235,32 @@ export const SharedStopwatch: React.FC = () => {
       showAddButton={false}
     >
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <StopwatchItem
-            stopwatch={sharedStopwatch}
-            onRemove={() => {}} // Brak akcji usuwania w trybie udostępnionym
-            onPause={() => {}} // Brak akcji pauzowania w trybie udostępnionym
-            onResume={() => {}} // Brak akcji wznawiania w trybie udostępnionym
-            onShare={() => {}} // Brak akcji udostępniania w trybie udostępnionym
-            isReadOnly={true}
-          />
-        </div>
-
-        {/* Informacje */}
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-start">
-            <svg
-              className="w-5 h-5 text-blue-500 mt-0.5 mr-3"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <div>
-              <h3 className="text-blue-900 font-medium mb-1">Tryb podglądu</h3>
-              <p className="text-blue-700 text-sm">
-                Ten stoper jest w trybie podglądu. Aby móc go edytować, dodaj go
-                do swojej listy stoperów w głównej aplikacji.
-              </p>
-            </div>
+        {localStopwatch && (
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <StopwatchItem
+              stopwatch={localStopwatch}
+              onRemove={handleRemoveStopwatch}
+              onPause={handlePauseStopwatch}
+              onResume={handleResumeStopwatch}
+              onShare={handleShareStopwatch}
+              isReadOnly={false}
+            />
           </div>
-        </div>
+        )}
       </div>
+
+      <GlobalPopup
+        isVisible={isPopupVisible}
+        title={popupTitle}
+        message={popupMessage}
+        type={popupType}
+        onClose={closePopup}
+        onConfirm={popupOnConfirm}
+        confirmText={popupType === 'confirmation' ? 'Usuń' : 'OK'}
+        cancelText="Anuluj"
+        showAutoHide={popupType === 'success'}
+        shareLink={shareLink}
+      />
     </Layout>
   );
 };
