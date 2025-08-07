@@ -5,12 +5,14 @@ import { parseShareUrl, decodeStopwatchData } from '../../../utils/share.utils';
 
 export const useSharedStopwatch = () => {
   const { id } = useParams<{ id: string }>();
-  //const [searchParams] = useSearchParams();
   const [sharedStopwatch, setSharedStopwatch] = useState<Stopwatch | null>(
     null
   );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorType, setErrorType] = useState<
+    'invalid_url' | 'invalid_data' | 'network' | 'unknown' | null
+  >(null);
 
   useEffect(() => {
     const handleSharedStopwatch = async () => {
@@ -18,19 +20,37 @@ export const useSharedStopwatch = () => {
 
       setIsLoading(true);
       setError(null);
+      setErrorType(null);
 
       try {
         const currentUrl = window.location.href;
+
+        if (!currentUrl.includes('/stopwatch/')) {
+          setError('Nieprawidłowy format linku udostępniania');
+          setErrorType('invalid_url');
+          setIsLoading(false);
+          return;
+        }
+
         const parsedUrl = parseShareUrl(currentUrl);
 
         if (!parsedUrl) {
-          setError('Nieprawidłowy link udostępniania');
+          setError('Link udostępniania jest nieprawidłowy lub uszkodzony');
+          setErrorType('invalid_url');
           setIsLoading(false);
           return;
         }
 
         if (parsedUrl.stopwatchId !== id) {
-          setError('Nieprawidłowy identyfikator stopera');
+          setError('Identyfikator stopera w linku nie zgadza się z URL');
+          setErrorType('invalid_data');
+          setIsLoading(false);
+          return;
+        }
+
+        if (!parsedUrl.encodedData || parsedUrl.encodedData.length < 10) {
+          setError('Dane stopera są nieprawidłowe lub uszkodzone');
+          setErrorType('invalid_data');
           setIsLoading(false);
           return;
         }
@@ -38,7 +58,16 @@ export const useSharedStopwatch = () => {
         const decodedStopwatch = decodeStopwatchData(parsedUrl.encodedData);
 
         if (decodedStopwatch.id !== id) {
-          setError('Nieprawidłowe dane stopera');
+          setError('Dane stopera są nieprawidłowe - ID nie zgadza się');
+          setErrorType('invalid_data');
+          setIsLoading(false);
+          return;
+        }
+
+        const now = new Date();
+        if (decodedStopwatch.targetDate < now) {
+          setError('Ten stoper już się zakończył i nie może być udostępniony');
+          setErrorType('invalid_data');
           setIsLoading(false);
           return;
         }
@@ -46,11 +75,28 @@ export const useSharedStopwatch = () => {
         setSharedStopwatch(decodedStopwatch);
       } catch (err) {
         console.error('Błąd podczas importowania udostępnionego stopera:', err);
-        setError(
-          err instanceof Error
-            ? err.message
-            : 'Nie udało się zaimportować stopera'
-        );
+
+        let errorMessage = 'Nie udało się zaimportować stopera';
+        let errorTypeValue:
+          | 'invalid_url'
+          | 'invalid_data'
+          | 'network'
+          | 'unknown' = 'unknown';
+
+        if (err instanceof Error) {
+          if (err.message.includes('Nie udało się zdekodować')) {
+            errorMessage = 'Dane stopera są uszkodzone lub nieprawidłowe';
+            errorTypeValue = 'invalid_data';
+          } else if (err.message.includes('Nieprawidłowa struktura')) {
+            errorMessage = 'Format danych stopera jest nieprawidłowy';
+            errorTypeValue = 'invalid_data';
+          } else {
+            errorMessage = err.message;
+          }
+        }
+
+        setError(errorMessage);
+        setErrorType(errorTypeValue);
       } finally {
         setIsLoading(false);
       }
@@ -62,12 +108,14 @@ export const useSharedStopwatch = () => {
   const clearSharedStopwatch = () => {
     setSharedStopwatch(null);
     setError(null);
+    setErrorType(null);
   };
 
   return {
     sharedStopwatch,
     isLoading,
     error,
+    errorType,
     clearSharedStopwatch,
   };
 };

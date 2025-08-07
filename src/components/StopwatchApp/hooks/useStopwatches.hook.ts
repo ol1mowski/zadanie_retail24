@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import type { Stopwatch, StopwatchFormData } from '../../../types/stopwatch';
 import {
   generateStopwatchId,
@@ -125,47 +125,48 @@ export const useStopwatches = (sharedStopwatch?: Stopwatch | null) => {
     setIsPopupVisible(true);
   };
 
-  const importSharedStopwatch = (stopwatch: Stopwatch) => {
-    // Sprawdź czy stoper już istnieje
-    const existingStopwatch = stopwatches.find(s => s.id === stopwatch.id);
+  const importSharedStopwatch = useCallback(
+    (stopwatch: Stopwatch) => {
+      const existingStopwatch = stopwatches.find(s => s.id === stopwatch.id);
 
-    if (existingStopwatch) {
-      setPopupTitle('Stoper już istnieje');
-      setPopupMessage(`Stoper "${stopwatch.name}" jest już na liście.`);
-      setPopupType('success');
-      setPopupOnConfirm(undefined);
-      setIsPopupVisible(true);
-      return;
-    }
+      if (existingStopwatch) {
+        setPopupTitle('Stoper już istnieje');
+        setPopupMessage(`Stoper "${stopwatch.name}" jest już na liście.`);
+        setPopupType('success');
+        setPopupOnConfirm(undefined);
+        setIsPopupVisible(true);
+        return;
+      }
 
-    setPopupTitle('Importuj udostępniony stoper');
-    setPopupMessage(
-      `Czy chcesz dodać stoper "${stopwatch.name}" do swojej listy?`
-    );
-    setPopupType('import');
-    setPopupOnConfirm(() => () => {
-      setStopwatches(prev => {
-        const updatedStopwatches = [...prev, stopwatch];
-        saveStopwatchesToCookies(updatedStopwatches);
-        return updatedStopwatches;
-      });
-
-      setPopupTitle('Stoper zaimportowany');
+      setPopupTitle('Importuj udostępniony stoper');
       setPopupMessage(
-        `Stoper "${stopwatch.name}" został pomyślnie dodany do listy.`
+        `Czy chcesz dodać stoper "${stopwatch.name}" do swojej listy?`
       );
-      setPopupType('success');
-      setPopupOnConfirm(undefined);
-    });
-    setIsPopupVisible(true);
-  };
+      setPopupType('import');
+      setPopupOnConfirm(() => () => {
+        setStopwatches(prev => {
+          const updatedStopwatches = [...prev, stopwatch];
+          saveStopwatchesToCookies(updatedStopwatches);
+          return updatedStopwatches;
+        });
 
-  // Obsługa automatycznego importowania udostępnionych stoperów
+        setPopupTitle('Stoper zaimportowany');
+        setPopupMessage(
+          `Stoper "${stopwatch.name}" został pomyślnie dodany do listy.`
+        );
+        setPopupType('success');
+        setPopupOnConfirm(undefined);
+      });
+      setIsPopupVisible(true);
+    },
+    [stopwatches]
+  );
+
   useEffect(() => {
     if (sharedStopwatch) {
       importSharedStopwatch(sharedStopwatch);
     }
-  }, [sharedStopwatch]);
+  }, [sharedStopwatch, importSharedStopwatch]);
 
   useEffect(() => {
     const interval = setInterval(() => {
