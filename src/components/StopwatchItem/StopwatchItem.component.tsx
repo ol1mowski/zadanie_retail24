@@ -14,6 +14,7 @@ export const StopwatchItem: React.FC<StopwatchItemProps> = ({
   onPause,
   onResume,
   onShare,
+  isReadOnly = false,
 }) => {
   const [isCompleted, setIsCompleted] = useState<boolean>(
     isStopwatchCompleted(stopwatch)
@@ -57,6 +58,7 @@ export const StopwatchItem: React.FC<StopwatchItemProps> = ({
         onPause={onPause}
         onResume={onResume}
         onShare={onShare}
+        isReadOnly={isReadOnly}
       />
 
       <StopwatchCompletedMessage isCompleted={isCompleted} />

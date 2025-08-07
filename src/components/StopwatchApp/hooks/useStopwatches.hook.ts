@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import type { Stopwatch, StopwatchFormData } from '../../../types/stopwatch';
 import {
   generateStopwatchId,
@@ -9,7 +9,7 @@ import {
   loadStopwatchesFromCookies,
 } from '../../../utils/cookies.utils';
 
-export const useStopwatches = (sharedStopwatch?: Stopwatch | null) => {
+export const useStopwatches = () => {
   const [stopwatches, setStopwatches] = useState<Stopwatch[]>([]);
   const [popupMessage, setPopupMessage] = useState<string>('');
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
@@ -125,49 +125,6 @@ export const useStopwatches = (sharedStopwatch?: Stopwatch | null) => {
     setIsPopupVisible(true);
   };
 
-  const importSharedStopwatch = useCallback(
-    (stopwatch: Stopwatch) => {
-      const existingStopwatch = stopwatches.find(s => s.id === stopwatch.id);
-
-      if (existingStopwatch) {
-        setPopupTitle('Stoper już istnieje');
-        setPopupMessage(`Stoper "${stopwatch.name}" jest już na liście.`);
-        setPopupType('success');
-        setPopupOnConfirm(undefined);
-        setIsPopupVisible(true);
-        return;
-      }
-
-      setPopupTitle('Importuj udostępniony stoper');
-      setPopupMessage(
-        `Czy chcesz dodać stoper "${stopwatch.name}" do swojej listy?`
-      );
-      setPopupType('import');
-      setPopupOnConfirm(() => () => {
-        setStopwatches(prev => {
-          const updatedStopwatches = [...prev, stopwatch];
-          saveStopwatchesToCookies(updatedStopwatches);
-          return updatedStopwatches;
-        });
-
-        setPopupTitle('Stoper zaimportowany');
-        setPopupMessage(
-          `Stoper "${stopwatch.name}" został pomyślnie dodany do listy.`
-        );
-        setPopupType('success');
-        setPopupOnConfirm(undefined);
-      });
-      setIsPopupVisible(true);
-    },
-    [stopwatches]
-  );
-
-  useEffect(() => {
-    if (sharedStopwatch) {
-      importSharedStopwatch(sharedStopwatch);
-    }
-  }, [sharedStopwatch, importSharedStopwatch]);
-
   useEffect(() => {
     const interval = setInterval(() => {
       const newlyCompleted: Stopwatch[] = [];
@@ -215,7 +172,6 @@ export const useStopwatches = (sharedStopwatch?: Stopwatch | null) => {
     pauseStopwatch,
     resumeStopwatch,
     shareStopwatch,
-    importSharedStopwatch,
     popupMessage,
     popupTitle,
     popupType,

@@ -20,6 +20,7 @@ export interface StopwatchItemProps {
   onPause: (id: string) => void;
   onResume: (id: string) => void;
   onShare: (link: string) => void;
+  isReadOnly?: boolean;
 }
 
 export interface StopwatchGridProps {
