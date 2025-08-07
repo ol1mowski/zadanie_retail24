@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Layout } from '../Layout/Layout.component';
 import { useSharedStopwatch } from '../StopwatchApp/hooks/useSharedStopwatch.hook';
 import { StopwatchItem } from '../StopwatchItem';
 
@@ -133,30 +134,11 @@ export const SharedStopwatch: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                Udostępniony stoper
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Ten stoper został udostępniony z Tobą
-              </p>
-            </div>
-            <button
-              onClick={() => navigate('/')}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
-            >
-              Przejdź do aplikacji
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Stoper */}
+    <Layout
+      title="Udostępniony stoper"
+      subtitle="Ten stoper został udostępniony z Tobą"
+      showAddButton={false}
+    >
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-lg p-6">
           <StopwatchItem
@@ -195,6 +177,6 @@ export const SharedStopwatch: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };

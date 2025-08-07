@@ -1,5 +1,4 @@
-import { AppContainer } from './components/AppContainer.component';
-import { AppHeader } from './components/AppHeader.component';
+import { Layout } from '../Layout/Layout.component';
 import { AppMain } from './components/AppMain.component';
 import { useStopwatches } from './hooks/useStopwatches.hook';
 import { useModal } from './hooks/useModal.hook';
@@ -31,9 +30,7 @@ export const StopwatchApp: React.FC = () => {
   };
 
   return (
-    <AppContainer>
-      <AppHeader onAddStopwatch={openModal} />
-
+    <Layout onAddStopwatch={openModal}>
       <AppMain stopwatches={stopwatches}>
         <StopwatchGrid
           stopwatches={stopwatches}
@@ -62,6 +59,6 @@ export const StopwatchApp: React.FC = () => {
         showAutoHide={popupType === 'success'}
         shareLink={shareLink}
       />
-    </AppContainer>
+    </Layout>
   );
 };
