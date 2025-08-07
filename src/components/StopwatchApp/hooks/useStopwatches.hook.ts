@@ -118,7 +118,7 @@ export const useStopwatches = (sharedStopwatch?: Stopwatch | null) => {
 
   const shareStopwatch = (link: string) => {
     setPopupTitle('Udostępnij stoper');
-    setPopupMessage('Skopiuj link poniżej, aby udostępnić stoper:');
+    setPopupMessage('Link został wygenerowany. Skopiuj go i wyślij znajomym:');
     setPopupType('share');
     setShareLink(link);
     setPopupOnConfirm(undefined);

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export type PopupType =
   | 'success'
@@ -35,6 +35,7 @@ export const GlobalPopup: React.FC<GlobalPopupProps> = ({
   showAutoHide = true,
   shareLink,
 }) => {
+  const [isCopied, setIsCopied] = useState(false);
   useEffect(() => {
     if (isVisible && autoHideDuration > 0 && showAutoHide && !onConfirm) {
       const timer = setTimeout(() => {
@@ -44,6 +45,12 @@ export const GlobalPopup: React.FC<GlobalPopupProps> = ({
       return () => clearTimeout(timer);
     }
   }, [isVisible, autoHideDuration, onClose, showAutoHide, onConfirm]);
+
+  useEffect(() => {
+    if (!isVisible) {
+      setIsCopied(false);
+    }
+  }, [isVisible]);
 
   if (!isVisible) return null;
 
@@ -208,24 +215,84 @@ export const GlobalPopup: React.FC<GlobalPopupProps> = ({
 
           {type === 'share' && shareLink && (
             <div className="mb-4">
-              <div className="flex items-center gap-2 p-3 bg-gray-100 rounded-lg border">
-                <input
-                  type="text"
-                  value={shareLink}
-                  readOnly
-                  className="flex-1 bg-transparent text-sm text-gray-700 outline-none"
-                />
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(shareLink).then(() => {
-                      // TODO: dodać feedback o skopiowaniu
-                    });
-                  }}
-                  className="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors"
-                  title="Kopiuj link"
-                >
-                  Kopiuj
-                </button>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                  <div className="flex-1 min-w-0">
+                    <input
+                      type="text"
+                      value={shareLink}
+                      readOnly
+                      className="w-full bg-transparent text-sm text-gray-700 outline-none truncate"
+                      title={shareLink}
+                    />
+                  </div>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard
+                        .writeText(shareLink)
+                        .then(() => {
+                          setIsCopied(true);
+                          setTimeout(() => setIsCopied(false), 2000);
+                        })
+                        .catch(() => {
+                          const textArea = document.createElement('textarea');
+                          textArea.value = shareLink;
+                          document.body.appendChild(textArea);
+                          textArea.select();
+                          document.execCommand('copy');
+                          document.body.removeChild(textArea);
+                          setIsCopied(true);
+                          setTimeout(() => setIsCopied(false), 2000);
+                        });
+                    }}
+                    className={`px-4 py-2 text-white text-sm rounded-lg transition-all duration-200 font-medium flex items-center gap-2 ${
+                      isCopied
+                        ? 'bg-green-500 hover:bg-green-600'
+                        : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                    title={isCopied ? 'Skopiowano!' : 'Kopiuj link'}
+                    disabled={isCopied}
+                  >
+                    {isCopied ? (
+                      <>
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        Skopiowano!
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                          />
+                        </svg>
+                        Kopiuj
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div className="text-xs text-gray-500 text-center">
+                  Link będzie aktywny przez 30 dni
+                </div>
               </div>
             </div>
           )}
