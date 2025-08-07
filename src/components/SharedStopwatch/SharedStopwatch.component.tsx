@@ -58,7 +58,7 @@ export const SharedStopwatch: React.FC = () => {
   return (
     <>
       <SharedStopwatchContent
-        stopwatch={localStopwatch!}
+        stopwatch={localStopwatch}
         onRemove={handleRemoveStopwatch}
         onPause={handlePauseStopwatch}
         onResume={handleResumeStopwatch}

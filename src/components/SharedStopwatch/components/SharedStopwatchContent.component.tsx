@@ -4,7 +4,7 @@ import { StopwatchItem } from '../../StopwatchItem';
 import { SEO } from '../../ui';
 
 interface SharedStopwatchContentProps {
-  stopwatch: Stopwatch;
+  stopwatch: Stopwatch | null;
   onRemove: () => void;
   onPause: () => void;
   onResume: () => void;
@@ -18,6 +18,10 @@ export const SharedStopwatchContent: React.FC<SharedStopwatchContentProps> = ({
   onResume,
   onShare,
 }) => {
+  if (!stopwatch) {
+    return null;
+  }
+
   return (
     <>
       <SEO
