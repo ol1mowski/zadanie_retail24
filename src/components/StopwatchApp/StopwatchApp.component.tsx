@@ -1,3 +1,4 @@
+//import { useParams } from 'react-router-dom';
 import { AppContainer } from './components/AppContainer.component';
 import { AppHeader } from './components/AppHeader.component';
 import { AppMain } from './components/AppMain.component';
@@ -8,6 +9,8 @@ import { StopwatchGrid } from '../StopwatchGrid';
 import { GlobalPopup } from '../ui/GlobalPopup.component';
 
 export const StopwatchApp: React.FC = () => {
+  // const { id } = useParams<{ id: string }>();
+
   const {
     stopwatches,
     addStopwatch,
