@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { StopwatchApp } from './components/StopwatchApp/StopwatchApp.component';
 import { SharedStopwatch } from './components/SharedStopwatch/SharedStopwatch.component';
+import { NotFoundPage } from './components/NotFoundPage/NotFoundPage.component';
 import './index.css';
 
 const App: React.FC = () => {
@@ -9,6 +10,7 @@ const App: React.FC = () => {
     <Routes>
       <Route path="/" element={<StopwatchApp />} />
       <Route path="/stopwatch/:id" element={<SharedStopwatch />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
