@@ -1,4 +1,4 @@
-import type { StopwatchGridProps } from '../../types/stopwatch';
+import type { StopwatchGridProps } from '../../types/stopwatch.type';
 import { EmptyState } from './components/EmptyState.component';
 import { StopwatchList } from './components/StopwatchList.component';
 import { StopwatchCounter } from './components/StopwatchCounter.component';

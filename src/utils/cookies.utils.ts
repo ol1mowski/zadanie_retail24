@@ -1,4 +1,4 @@
-import type { Stopwatch } from '../types/stopwatch';
+import type { Stopwatch } from '../types/stopwatch.type';
 
 const STOPWATCHES_COOKIE_KEY = 'stopwatches';
 

@@ -1,4 +1,4 @@
-import type { Stopwatch } from '../types/stopwatch';
+import type { Stopwatch } from '../types/stopwatch.type';
 
 export const encodeStopwatchData = (stopwatch: Stopwatch): string => {
   try {

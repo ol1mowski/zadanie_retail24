@@ -1,4 +1,4 @@
-import type { Stopwatch } from '../../types/stopwatch';
+import type { Stopwatch } from '../../types/stopwatch.type';
 import { StatisticCard } from './components/StatisticCard.component';
 
 interface StatisticsSectionProps {

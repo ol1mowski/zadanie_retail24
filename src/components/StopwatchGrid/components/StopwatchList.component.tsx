@@ -1,4 +1,4 @@
-import type { StopwatchGridProps } from '../../../types/stopwatch';
+import type { StopwatchGridProps } from '../../../types/stopwatch.type';
 import { StopwatchItem } from '../../StopwatchItem';
 
 export const StopwatchList: React.FC<StopwatchGridProps> = ({

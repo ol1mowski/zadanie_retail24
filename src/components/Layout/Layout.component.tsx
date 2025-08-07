@@ -3,7 +3,7 @@ import { AddStopwatchModal } from '../AddStopwatchModal';
 import { GlobalPopup } from '../ui/GlobalPopup.component';
 import { useModal } from './hooks/useModal.hook';
 import { StatisticsSection } from '../StatisticsSection/StatisticsSection.component';
-import type { Stopwatch, StopwatchFormData } from '../../types/stopwatch';
+import type { Stopwatch, StopwatchFormData } from '../../types/stopwatch.type';
 
 interface LayoutProps {
   children: React.ReactNode;

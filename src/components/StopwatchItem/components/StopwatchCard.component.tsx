@@ -1,4 +1,4 @@
-import type { StopwatchStatus } from '../../../types/stopwatch';
+import type { StopwatchStatus } from '../../../types/stopwatch.type';
 
 interface StopwatchCardProps {
   status: StopwatchStatus;

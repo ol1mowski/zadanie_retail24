@@ -1,5 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
-import type { Stopwatch, StopwatchFormData } from '../../../types/stopwatch';
+import type {
+  Stopwatch,
+  StopwatchFormData,
+} from '../../../types/stopwatch.type';
 import {
   generateStopwatchId,
   isStopwatchCompleted,

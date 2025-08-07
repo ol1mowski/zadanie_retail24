@@ -1,4 +1,4 @@
-import type { StopwatchFormData } from '../../../types/stopwatch';
+import type { StopwatchFormData } from '../../../types/stopwatch.type';
 
 interface FormPreviewProps {
   formData: StopwatchFormData;

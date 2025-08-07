@@ -1,5 +1,5 @@
 import { generateShareLink } from '../../utils/share.utils';
-import type { Stopwatch } from '../../types/stopwatch';
+import type { Stopwatch } from '../../types/stopwatch.type';
 
 interface ExportLinkButtonProps {
   stopwatch: Stopwatch;

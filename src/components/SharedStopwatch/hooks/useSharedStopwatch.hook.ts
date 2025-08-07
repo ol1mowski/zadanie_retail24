@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { Stopwatch } from '../../../types/stopwatch';
+import type { Stopwatch } from '../../../types/stopwatch.type';
 import { parseShareUrl, decodeStopwatchData } from '../../../utils/share.utils';
 
 export const useSharedStopwatch = () => {

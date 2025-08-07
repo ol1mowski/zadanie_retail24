@@ -1,4 +1,4 @@
-import type { Stopwatch, StopwatchFormData } from '../types/stopwatch';
+import type { Stopwatch, StopwatchFormData } from '../types/stopwatch.type';
 
 export const formatTime = (milliseconds: number): string => {
   if (milliseconds <= 0) {

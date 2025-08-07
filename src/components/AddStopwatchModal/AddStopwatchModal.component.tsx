@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type {
   AddStopwatchModalProps,
   StopwatchFormData,
-} from '../../types/stopwatch';
+} from '../../types/stopwatch.type';
 import { ModalOverlay, ModalContainer, ModalHeader } from '../ui';
 import { StopwatchForm } from './components/StopwatchForm.component';
 

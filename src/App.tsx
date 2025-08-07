@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { StopwatchApp } from './components/StopwatchApp';
+import { StopwatchApp } from './components/StopwatchApp/StopwatchApp.component';
 import { SharedStopwatch } from './components/SharedStopwatch/SharedStopwatch.component';
 import './index.css';
 

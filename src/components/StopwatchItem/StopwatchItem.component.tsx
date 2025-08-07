@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { StopwatchItemProps } from '../../types/stopwatch';
+import type { StopwatchItemProps } from '../../types/stopwatch.type';
 import { isStopwatchCompleted } from '../../utils/stopwatch.utils';
 import { StopwatchCard } from './components/StopwatchCard.component';
 import { StopwatchStatusBadge } from './components/StopwatchStatusBadge.component';
