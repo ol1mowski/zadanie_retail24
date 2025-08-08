@@ -12,9 +12,4 @@ export { ModalContainer } from './Modal/ModalContainer.component';
 export { ModalHeader } from './Modal/ModalHeader.component';
 export { ModalOverlay } from './Modal/ModalOverlay.component';
 export { SEO } from './SEO/SEO.component';
-export {
-  ErrorBoundary,
-  RouteErrorBoundary,
-  useErrorHandler,
-  usePromiseRejectionHandler,
-} from './ErrorBoundary';
+export { ErrorBoundary } from './ErrorBoundary';
