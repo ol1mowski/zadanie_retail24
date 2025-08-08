@@ -12,6 +12,7 @@ import {
   loadStopwatchesFromCookies,
 } from '../../../utils/cookies.utils';
 import { usePopup } from '../../../hooks/usePopup.hook';
+import { useStopwatchActions } from '../../../hooks/useStopwatchActions.hook';
 
 export const useStopwatches = () => {
   const [stopwatches, setStopwatches] = useState<Stopwatch[]>([]);
@@ -26,6 +27,9 @@ export const useStopwatches = () => {
     closePopup,
     showPopup,
   } = usePopup();
+
+  const { pauseStopwatch, resumeStopwatch, removeStopwatch, shareStopwatch } =
+    useStopwatchActions(showPopup, setStopwatches);
 
   useEffect(() => {
     const savedStopwatches = loadStopwatchesFromCookies();
@@ -76,61 +80,6 @@ export const useStopwatches = () => {
     });
   };
 
-  const removeStopwatch = (id: string) => {
-    const stopwatch = stopwatches.find(s => s.id === id);
-    if (stopwatch) {
-      showPopup(
-        'Potwierdź usunięcie',
-        `Czy na pewno chcesz usunąć stoper "${stopwatch.name}"?`,
-        'confirmation',
-        () => {
-          setStopwatches(prev => {
-            const updatedStopwatches = prev.filter(
-              stopwatch => stopwatch.id !== id
-            );
-            saveStopwatchesToCookies(updatedStopwatches);
-            return updatedStopwatches;
-          });
-          closePopup();
-        }
-      );
-    }
-  };
-
-  const pauseStopwatch = (id: string) => {
-    setStopwatches(prev => {
-      const updatedStopwatches = prev.map(stopwatch =>
-        stopwatch.id === id
-          ? { ...stopwatch, status: 'paused' as const }
-          : stopwatch
-      );
-      saveStopwatchesToCookies(updatedStopwatches);
-      return updatedStopwatches;
-    });
-  };
-
-  const resumeStopwatch = (id: string) => {
-    setStopwatches(prev => {
-      const updatedStopwatches = prev.map(stopwatch =>
-        stopwatch.id === id
-          ? { ...stopwatch, status: 'active' as const }
-          : stopwatch
-      );
-      saveStopwatchesToCookies(updatedStopwatches);
-      return updatedStopwatches;
-    });
-  };
-
-  const shareStopwatch = (link: string) => {
-    showPopup(
-      'Udostępnij stoper',
-      'Link został wygenerowany. Skopiuj go i wyślij znajomym:',
-      'share',
-      undefined,
-      link
-    );
-  };
-
   useEffect(() => {
     const interval = setInterval(() => {
       const newlyCompleted: Stopwatch[] = [];
@@ -161,10 +110,15 @@ export const useStopwatches = () => {
   return {
     stopwatches,
     addStopwatch,
-    removeStopwatch,
-    pauseStopwatch,
-    resumeStopwatch,
-    shareStopwatch,
+    removeStopwatch: (id: string) => {
+      const stopwatch = stopwatches.find(s => s.id === id);
+      if (stopwatch) {
+        removeStopwatch(id, () => closePopup());
+      }
+    },
+    pauseStopwatch: (id: string) => pauseStopwatch(id),
+    resumeStopwatch: (id: string) => resumeStopwatch(id),
+    shareStopwatch: (stopwatch: Stopwatch) => shareStopwatch(stopwatch),
     popupMessage,
     popupTitle,
     popupType,
