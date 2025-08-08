@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 
-export type PopupType = 'success' | 'confirmation' | 'share';
+export type PopupType = 'success' | 'confirmation' | 'share' | 'import';
 
-export const useSharedStopwatchPopup = () => {
+export const usePopup = () => {
   const [popupMessage, setPopupMessage] = useState<string>('');
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
   const [popupTitle, setPopupTitle] = useState<string>('');

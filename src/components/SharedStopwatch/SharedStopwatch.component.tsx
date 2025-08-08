@@ -1,7 +1,7 @@
 import { useSharedStopwatch } from './hooks/useSharedStopwatch.hook';
 import { useSharedStopwatchState } from './hooks/useSharedStopwatchState.hook';
-import { useSharedStopwatchPopup } from './hooks/useSharedStopwatchPopup.hook';
 import { useSharedStopwatchActions } from './hooks/useSharedStopwatchActions.hook';
+import { usePopup } from '../../hooks/usePopup.hook';
 import { GlobalPopup, LoadingSpinner } from '../ui';
 import {
   SharedStopwatchError,
@@ -22,7 +22,7 @@ export const SharedStopwatch: React.FC = () => {
     shareLink,
     closePopup,
     showPopup,
-  } = useSharedStopwatchPopup();
+  } = usePopup();
 
   const {
     handleRemoveStopwatch,

@@ -11,20 +11,21 @@ import {
   saveStopwatchesToCookies,
   loadStopwatchesFromCookies,
 } from '../../../utils/cookies.utils';
+import { usePopup } from '../../../hooks/usePopup.hook';
 
 export const useStopwatches = () => {
   const [stopwatches, setStopwatches] = useState<Stopwatch[]>([]);
-  const [popupMessage, setPopupMessage] = useState<string>('');
-  const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
-  const [popupTitle, setPopupTitle] = useState<string>('');
-  const [popupType, setPopupType] = useState<
-    'success' | 'confirmation' | 'share' | 'import'
-  >('success');
-  const [popupOnConfirm, setPopupOnConfirm] = useState<
-    (() => void) | undefined
-  >(undefined);
-  const [shareLink, setShareLink] = useState<string>('');
   const completedStopwatchesRef = useRef<Set<string>>(new Set());
+  const {
+    popupMessage,
+    isPopupVisible,
+    popupTitle,
+    popupType,
+    popupOnConfirm,
+    shareLink,
+    closePopup,
+    showPopup,
+  } = usePopup();
 
   useEffect(() => {
     const savedStopwatches = loadStopwatchesFromCookies();
@@ -78,20 +79,21 @@ export const useStopwatches = () => {
   const removeStopwatch = (id: string) => {
     const stopwatch = stopwatches.find(s => s.id === id);
     if (stopwatch) {
-      setPopupTitle('Potwierdź usunięcie');
-      setPopupMessage(`Czy na pewno chcesz usunąć stoper "${stopwatch.name}"?`);
-      setPopupType('confirmation');
-      setPopupOnConfirm(() => () => {
-        setStopwatches(prev => {
-          const updatedStopwatches = prev.filter(
-            stopwatch => stopwatch.id !== id
-          );
-          saveStopwatchesToCookies(updatedStopwatches);
-          return updatedStopwatches;
-        });
-        closePopup();
-      });
-      setIsPopupVisible(true);
+      showPopup(
+        'Potwierdź usunięcie',
+        `Czy na pewno chcesz usunąć stoper "${stopwatch.name}"?`,
+        'confirmation',
+        () => {
+          setStopwatches(prev => {
+            const updatedStopwatches = prev.filter(
+              stopwatch => stopwatch.id !== id
+            );
+            saveStopwatchesToCookies(updatedStopwatches);
+            return updatedStopwatches;
+          });
+          closePopup();
+        }
+      );
     }
   };
 
@@ -120,12 +122,13 @@ export const useStopwatches = () => {
   };
 
   const shareStopwatch = (link: string) => {
-    setPopupTitle('Udostępnij stoper');
-    setPopupMessage('Link został wygenerowany. Skopiuj go i wyślij znajomym:');
-    setPopupType('share');
-    setShareLink(link);
-    setPopupOnConfirm(undefined);
-    setIsPopupVisible(true);
+    showPopup(
+      'Udostępnij stoper',
+      'Link został wygenerowany. Skopiuj go i wyślij znajomym:',
+      'share',
+      undefined,
+      link
+    );
   };
 
   useEffect(() => {
@@ -148,25 +151,12 @@ export const useStopwatches = () => {
             ? `Stoper "${newlyCompleted[0].name}" został zakończony!`
             : `${newlyCompleted.length} stoperów zostało zakończonych!`;
 
-        setPopupTitle('Stoper zakończony!');
-        setPopupMessage(message);
-        setPopupType('success');
-        setPopupOnConfirm(undefined);
-        setIsPopupVisible(true);
+        showPopup('Stoper zakończony!', message, 'success');
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [stopwatches]);
-
-  const closePopup = () => {
-    setIsPopupVisible(false);
-    setPopupMessage('');
-    setPopupTitle('');
-    setPopupType('success');
-    setPopupOnConfirm(undefined);
-    setShareLink('');
-  };
+  }, [stopwatches, showPopup]);
 
   return {
     stopwatches,
