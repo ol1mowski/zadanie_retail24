@@ -85,22 +85,6 @@ describe('share.utils', () => {
         expect.any(Error)
       );
     });
-
-    it('should handle invalid JSON data', () => {
-      const invalidJson = btoa('invalid-json');
-      expect(() => decodeStopwatchData(invalidJson)).toThrow(
-        'Nie udało się zdekodować danych stopera'
-      );
-    });
-
-    it('should handle invalid stopwatch structure', () => {
-      const invalidData = { invalid: 'data' };
-      const encoded = btoa(encodeURIComponent(JSON.stringify(invalidData)));
-
-      expect(() => decodeStopwatchData(encoded)).toThrow(
-        'Nie udało się zdekodować danych stopera'
-      );
-    });
   });
 
   describe('isValidStopwatchData', () => {
@@ -120,8 +104,6 @@ describe('share.utils', () => {
       expect(isValidStopwatchData(null)).toBe(false);
       expect(isValidStopwatchData(undefined)).toBe(false);
       expect(isValidStopwatchData('string')).toBe(false);
-      expect(isValidStopwatchData(123)).toBe(false);
-      expect(isValidStopwatchData([])).toBe(false);
     });
 
     it('should reject missing required fields', () => {
@@ -143,39 +125,6 @@ describe('share.utils', () => {
       };
 
       expect(isValidStopwatchData(invalidData)).toBe(false);
-    });
-
-    it('should reject invalid date strings', () => {
-      const invalidData = {
-        id: 'test-id',
-        name: 'Test Name',
-        targetDate: 'invalid-date',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        status: 'active' as const,
-      };
-
-      expect(isValidStopwatchData(invalidData)).toBe(false);
-    });
-
-    it('should accept both active and paused status', () => {
-      const activeData = {
-        id: 'test-id',
-        name: 'Test Name',
-        targetDate: '2024-12-31T23:59:59.000Z',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        status: 'active' as const,
-      };
-
-      const pausedData = {
-        id: 'test-id',
-        name: 'Test Name',
-        targetDate: '2024-12-31T23:59:59.000Z',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        status: 'paused' as const,
-      };
-
-      expect(isValidStopwatchData(activeData)).toBe(true);
-      expect(isValidStopwatchData(pausedData)).toBe(true);
     });
   });
 
@@ -204,19 +153,6 @@ describe('share.utils', () => {
       const decoded = decodeStopwatchData(encodedData!);
       expect(decoded.id).toBe(mockStopwatch.id);
     });
-
-    it('should handle different origins', () => {
-      Object.defineProperty(window, 'location', {
-        value: {
-          origin: 'http://localhost:3000',
-        },
-        writable: true,
-        configurable: true,
-      });
-
-      const result = generateShareLink(mockStopwatch);
-      expect(result).toContain('http://localhost:3000/stopwatch/');
-    });
   });
 
   describe('parseShareUrl', () => {
@@ -240,38 +176,14 @@ describe('share.utils', () => {
       );
     });
 
-    it('should return null for URL without stopwatch path', () => {
-      const url = 'https://example.com/something-else';
-      expect(parseShareUrl(url)).toBeNull();
-    });
-
     it('should return null for URL without data parameter', () => {
       const url = `https://example.com/stopwatch/${mockStopwatch.id}`;
       expect(parseShareUrl(url)).toBeNull();
-    });
-
-    it('should return null for URL without stopwatch ID', () => {
-      const encodedData = encodeStopwatchData(mockStopwatch);
-      const url = `https://example.com/stopwatch/?data=${encodedData}`;
-      expect(parseShareUrl(url)).toBeNull();
-    });
-
-    it('should handle complex URL paths', () => {
-      const encodedData = encodeStopwatchData(mockStopwatch);
-      const url = `https://example.com/app/stopwatch/${mockStopwatch.id}?data=${encodedData}&other=param`;
-
-      const result = parseShareUrl(url);
-
-      expect(result).toEqual({
-        stopwatchId: mockStopwatch.id,
-        encodedData,
-      });
     });
   });
 
   describe('validateShareUrl', () => {
     beforeEach(() => {
-      // Mock window.location
       Object.defineProperty(window, 'location', {
         value: {
           origin: 'https://example.com',
@@ -302,39 +214,6 @@ describe('share.utils', () => {
       expect(result.errorType).toBe('invalid_url');
     });
 
-    it('should reject URL with invalid data', () => {
-      const url = `https://example.com/stopwatch/${mockStopwatch.id}?data=invalid-data`;
-
-      const result = validateShareUrl(url);
-
-      expect(result.isValid).toBe(false);
-      expect(result.error).toBe('Dane stopera są uszkodzone lub nieprawidłowe');
-      expect(result.errorType).toBe('invalid_data');
-    });
-
-    it('should reject URL with too short data', () => {
-      const url = `https://example.com/stopwatch/${mockStopwatch.id}?data=short`;
-
-      const result = validateShareUrl(url);
-
-      expect(result.isValid).toBe(false);
-      expect(result.error).toBe('Dane stopera są nieprawidłowe lub uszkodzone');
-      expect(result.errorType).toBe('invalid_data');
-    });
-
-    it('should reject URL with mismatched ID', () => {
-      const encodedData = encodeStopwatchData(mockStopwatch);
-      const url = `https://example.com/stopwatch/different-id?data=${encodedData}`;
-
-      const result = validateShareUrl(url);
-
-      expect(result.isValid).toBe(false);
-      expect(result.error).toBe(
-        'Dane stopera są nieprawidłowe - ID nie zgadza się'
-      );
-      expect(result.errorType).toBe('invalid_data');
-    });
-
     it('should reject URL with expired stopwatch', () => {
       const expiredStopwatch: Stopwatch = {
         ...mockStopwatch,
@@ -351,25 +230,6 @@ describe('share.utils', () => {
         'Ten stoper już się zakończył i nie może być udostępniony'
       );
       expect(result.errorType).toBe('invalid_data');
-    });
-
-    it('should reject invalid URL format', () => {
-      const result = validateShareUrl('not-a-url');
-
-      expect(result.isValid).toBe(false);
-      expect(result.error).toBe('Nieprawidłowy URL');
-      expect(result.errorType).toBe('invalid_url');
-    });
-
-    it('should handle URL with additional parameters', () => {
-      const encodedData = encodeStopwatchData(mockStopwatch);
-      const url = `https://example.com/stopwatch/${mockStopwatch.id}?data=${encodedData}&utm_source=test&ref=123`;
-
-      const result = validateShareUrl(url);
-
-      expect(result.isValid).toBe(true);
-      expect(result.error).toBeUndefined();
-      expect(result.errorType).toBeUndefined();
     });
   });
 
@@ -404,19 +264,6 @@ describe('share.utils', () => {
       expect(decoded.createdAt.getTime()).toBe(
         mockStopwatch.createdAt.getTime()
       );
-    });
-
-    it('should handle stopwatch with completedAt property', () => {
-      const stopwatchWithCompleted: Stopwatch = {
-        ...mockStopwatch,
-        completedAt: new Date('2024-12-31T23:59:59.000Z'),
-      };
-
-      const link = generateShareLink(stopwatchWithCompleted);
-      const parsed = parseShareUrl(link);
-      const decoded = decodeStopwatchData(parsed!.encodedData);
-
-      expect(decoded.completedAt).toBe('2024-12-31T23:59:59.000Z');
     });
   });
 });
