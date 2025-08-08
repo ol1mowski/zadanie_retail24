@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 
 interface SEOProps {
   title: string;
@@ -36,26 +36,85 @@ export const SEO: React.FC<SEOProps> = ({
   const defaultOgUrl = ogUrl || window.location.href;
   const defaultCanonicalUrl = canonicalUrl || window.location.href;
 
-  return (
-    <Helmet>
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      {keywords && <meta name="keywords" content={keywords} />}
-      {canonicalUrl && <link rel="canonical" href={defaultCanonicalUrl} />}
+  useEffect(() => {
+    document.title = title;
 
-      {/* Open Graph */}
-      <meta property="og:title" content={defaultOgTitle} />
-      <meta property="og:description" content={defaultOgDescription} />
-      <meta property="og:type" content={ogType} />
-      <meta property="og:url" content={defaultOgUrl} />
+    const updateMetaTag = (
+      name: string,
+      content: string,
+      property?: string
+    ) => {
+      const selector = property
+        ? `meta[property="${property}"]`
+        : `meta[name="${name}"]`;
+      let meta = document.querySelector(selector) as HTMLMetaElement;
 
-      {/* Twitter Card */}
-      <meta name="twitter:card" content={twitterCard} />
-      <meta name="twitter:title" content={defaultTwitterTitle} />
-      <meta name="twitter:description" content={defaultTwitterDescription} />
+      if (!meta) {
+        meta = document.createElement('meta');
+        if (property) {
+          meta.setAttribute('property', property);
+        } else {
+          meta.setAttribute('name', name);
+        }
+        document.head.appendChild(meta);
+      }
 
-      {/* Robots */}
-      {noIndex && <meta name="robots" content="noindex, nofollow" />}
-    </Helmet>
-  );
+      meta.setAttribute('content', content);
+    };
+
+    // Aktualizuj meta tagi
+    updateMetaTag('description', description);
+    if (keywords) {
+      updateMetaTag('keywords', keywords);
+    }
+
+    updateMetaTag('og:title', defaultOgTitle, 'og:title');
+    updateMetaTag('og:description', defaultOgDescription, 'og:description');
+    updateMetaTag('og:type', ogType, 'og:type');
+    updateMetaTag('og:url', defaultOgUrl, 'og:url');
+
+    updateMetaTag('twitter:card', twitterCard, 'twitter:card');
+    updateMetaTag('twitter:title', defaultTwitterTitle, 'twitter:title');
+    updateMetaTag(
+      'twitter:description',
+      defaultTwitterDescription,
+      'twitter:description'
+    );
+
+    if (noIndex) {
+      updateMetaTag('robots', 'noindex, nofollow');
+    }
+
+    if (canonicalUrl) {
+      let canonical = document.querySelector(
+        'link[rel="canonical"]'
+      ) as HTMLLinkElement;
+      if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonical);
+      }
+      canonical.setAttribute('href', defaultCanonicalUrl);
+    }
+
+    return () => {
+      document.title = 'Stopwatch App';
+    };
+  }, [
+    title,
+    description,
+    keywords,
+    defaultOgTitle,
+    defaultOgDescription,
+    ogType,
+    defaultOgUrl,
+    twitterCard,
+    defaultTwitterTitle,
+    defaultTwitterDescription,
+    noIndex,
+    defaultCanonicalUrl,
+    canonicalUrl,
+  ]);
+
+  return null;
 };
