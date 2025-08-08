@@ -1,6 +1,6 @@
 import { useSharedStopwatch } from './hooks/useSharedStopwatch.hook';
 import { useSharedStopwatchState } from './hooks/useSharedStopwatchState.hook';
-import { useSharedStopwatchActions } from './hooks/useSharedStopwatchActions.hook';
+import { useStopwatchActions } from '../../hooks/useStopwatchActions.hook';
 import { usePopup } from '../../hooks/usePopup.hook';
 import { GlobalPopup, LoadingSpinner } from '../ui';
 import {
@@ -24,17 +24,8 @@ export const SharedStopwatch: React.FC = () => {
     showPopup,
   } = usePopup();
 
-  const {
-    handleRemoveStopwatch,
-    handlePauseStopwatch,
-    handleResumeStopwatch,
-    handleShareStopwatch,
-  } = useSharedStopwatchActions(
-    sharedStopwatch,
-    localStopwatch,
-    setLocalStopwatch,
-    showPopup
-  );
+  const { removeStopwatch, pauseStopwatch, resumeStopwatch, shareStopwatch } =
+    useStopwatchActions(showPopup, undefined, setLocalStopwatch);
 
   if (isLoading) {
     return (
@@ -59,10 +50,24 @@ export const SharedStopwatch: React.FC = () => {
     <>
       <SharedStopwatchContent
         stopwatch={localStopwatch}
-        onRemove={handleRemoveStopwatch}
-        onPause={handlePauseStopwatch}
-        onResume={handleResumeStopwatch}
-        onShare={handleShareStopwatch}
+        onRemove={() => {
+          if (!sharedStopwatch) return;
+          removeStopwatch(sharedStopwatch, () => {
+            window.location.href = '/';
+          });
+        }}
+        onPause={() => {
+          if (!localStopwatch) return;
+          pauseStopwatch(localStopwatch);
+        }}
+        onResume={() => {
+          if (!localStopwatch) return;
+          resumeStopwatch(localStopwatch);
+        }}
+        onShare={() => {
+          if (!localStopwatch) return;
+          shareStopwatch(localStopwatch);
+        }}
       />
 
       <GlobalPopup

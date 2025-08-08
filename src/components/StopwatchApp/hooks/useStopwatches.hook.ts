@@ -116,9 +116,9 @@ export const useStopwatches = () => {
         removeStopwatch(id, () => closePopup());
       }
     },
-    pauseStopwatch: (id: string) => pauseStopwatch(id),
-    resumeStopwatch: (id: string) => resumeStopwatch(id),
-    shareStopwatch: (stopwatch: Stopwatch) => shareStopwatch(stopwatch),
+    pauseStopwatch,
+    resumeStopwatch,
+    shareStopwatch,
     popupMessage,
     popupTitle,
     popupType,
