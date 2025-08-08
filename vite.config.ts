@@ -10,18 +10,5 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
     css: true,
-    // Dodajemy konfigurację dla CI/CD
-    pool: 'forks',
-    poolOptions: {
-      forks: {
-        singleFork: true,
-      },
-    },
-  },
-  // Konfiguracja dla build w CI/CD
-  build: {
-    rollupOptions: {
-      external: ['@rollup/rollup-linux-x64-gnu'],
-    },
   },
 });
