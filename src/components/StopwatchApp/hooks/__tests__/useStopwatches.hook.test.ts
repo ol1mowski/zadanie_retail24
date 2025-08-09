@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { renderHook, act, waitFor } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useStopwatches } from '../useStopwatches.hook';
 
 vi.mock('../../../utils/stopwatch.utils', () => ({
@@ -26,31 +26,18 @@ describe('useStopwatches', () => {
     vi.restoreAllMocks();
   });
 
-  it('should initialize with sample stopwatches when no saved data', async () => {
+  it('should initialize with sample stopwatches when no saved data', () => {
     const { result } = renderHook(() => useStopwatches());
-
-    // Początkowo powinien być loading
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.stopwatches).toHaveLength(0);
-
-    // Czekamy na załadowanie danych
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
 
     expect(result.current.stopwatches).toHaveLength(3);
     expect(result.current.stopwatches[0].name).toBe('Wakacje');
     expect(result.current.stopwatches[1].name).toBe('Deadline projektu');
     expect(result.current.stopwatches[2].name).toBe('Mecz');
+    expect(result.current.isLoading).toBe(false);
   });
 
-  it('should add new stopwatch', async () => {
+  it('should add new stopwatch', () => {
     const { result } = renderHook(() => useStopwatches());
-
-    // Czekamy na załadowanie danych
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
 
     const newStopwatchData = {
       name: 'Nowy stoper',
@@ -67,13 +54,8 @@ describe('useStopwatches', () => {
     expect(result.current.stopwatches[0].id).toBeDefined();
   });
 
-  it('should pause stopwatch', async () => {
+  it('should pause stopwatch', () => {
     const { result } = renderHook(() => useStopwatches());
-
-    // Czekamy na załadowanie danych
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
 
     act(() => {
       result.current.pauseStopwatch('1');
@@ -83,13 +65,8 @@ describe('useStopwatches', () => {
     expect(pausedStopwatch?.status).toBe('paused');
   });
 
-  it('should resume stopwatch', async () => {
+  it('should resume stopwatch', () => {
     const { result } = renderHook(() => useStopwatches());
-
-    // Czekamy na załadowanie danych
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
 
     act(() => {
       result.current.pauseStopwatch('1');
@@ -103,13 +80,8 @@ describe('useStopwatches', () => {
     expect(resumedStopwatch?.status).toBe('active');
   });
 
-  it('should show confirmation popup when removing stopwatch', async () => {
+  it('should show confirmation popup when removing stopwatch', () => {
     const { result } = renderHook(() => useStopwatches());
-
-    // Czekamy na załadowanie danych
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
 
     act(() => {
       result.current.removeStopwatch('1');
@@ -121,13 +93,8 @@ describe('useStopwatches', () => {
     expect(result.current.popupType).toBe('confirmation');
   });
 
-  it('should remove stopwatch after confirmation', async () => {
+  it('should remove stopwatch after confirmation', () => {
     const { result } = renderHook(() => useStopwatches());
-
-    // Czekamy na załadowanie danych
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
 
     act(() => {
       result.current.removeStopwatch('1');
