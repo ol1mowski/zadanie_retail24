@@ -2,7 +2,12 @@ import type { Stopwatch } from '../types/stopwatch.type';
 
 export const encodeStopwatchData = (stopwatch: Stopwatch): string => {
   try {
-    const stopwatchData = JSON.stringify(stopwatch);
+    const minimalData = {
+      id: stopwatch.id,
+      name: stopwatch.name.substring(0, 50),
+      targetDate: stopwatch.targetDate.toISOString(),
+    };
+    const stopwatchData = JSON.stringify(minimalData);
     return btoa(encodeURIComponent(stopwatchData));
   } catch (error) {
     console.error('Błąd podczas kodowania danych stopera:', error);
@@ -20,9 +25,11 @@ export const decodeStopwatchData = (encodedData: string): Stopwatch => {
     }
 
     return {
-      ...stopwatch,
+      id: stopwatch.id,
+      name: stopwatch.name,
       targetDate: new Date(stopwatch.targetDate),
-      createdAt: new Date(stopwatch.createdAt),
+      status: 'active' as const,
+      createdAt: new Date(),
     };
   } catch (error) {
     console.error('Błąd podczas dekodowania danych stopera:', error);
@@ -32,9 +39,10 @@ export const decodeStopwatchData = (encodedData: string): Stopwatch => {
 
 export const isValidStopwatchData = (
   data: unknown
-): data is Omit<Stopwatch, 'targetDate' | 'createdAt'> & {
+): data is {
+  id: string;
+  name: string;
   targetDate: string;
-  createdAt: string;
 } => {
   if (!data || typeof data !== 'object') {
     return false;
@@ -46,10 +54,8 @@ export const isValidStopwatchData = (
     typeof stopwatch.id === 'string' &&
     typeof stopwatch.name === 'string' &&
     typeof stopwatch.targetDate === 'string' &&
-    typeof stopwatch.createdAt === 'string' &&
-    stopwatch.status === 'active' &&
-    !isNaN(new Date(stopwatch.targetDate).getTime()) &&
-    !isNaN(new Date(stopwatch.createdAt).getTime())
+    stopwatch.name.length <= 50 &&
+    !isNaN(new Date(stopwatch.targetDate).getTime())
   );
 };
 
