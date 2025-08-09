@@ -103,18 +103,6 @@ export const useStopwatchActions = (
           );
           saveStopwatchesToCookies(updatedStopwatches);
 
-          // Zapisz usunięty stoper w localStorage dla udostępnionych linków
-          const deletedStopwatches = JSON.parse(
-            localStorage.getItem('deletedSharedStopwatches') || '[]'
-          );
-          if (!deletedStopwatches.includes(stopwatchId)) {
-            deletedStopwatches.push(stopwatchId);
-            localStorage.setItem(
-              'deletedSharedStopwatches',
-              JSON.stringify(deletedStopwatches)
-            );
-          }
-
           if (setStopwatches) {
             setStopwatches(prev => prev.filter(sw => sw.id !== stopwatchId));
           }
