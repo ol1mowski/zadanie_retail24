@@ -57,6 +57,16 @@ export const useSharedStopwatch = () => {
           return;
         }
 
+        const deletedStopwatches = JSON.parse(
+          localStorage.getItem('deletedSharedStopwatches') || '[]'
+        );
+        if (deletedStopwatches.includes(decodedStopwatch.id)) {
+          setError('Ten stoper został usunięty i nie jest już dostępny');
+          setErrorType('invalid_data');
+          setIsLoading(false);
+          return;
+        }
+
         const now = new Date();
         if (decodedStopwatch.targetDate < now) {
           setError('Ten stoper już się zakończył i nie może być udostępniony');
