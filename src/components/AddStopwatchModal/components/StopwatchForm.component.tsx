@@ -70,7 +70,12 @@ export const StopwatchForm: React.FC<StopwatchFormProps> = ({
         label="Data i godzina docelowa *"
         id="targetDate"
         type="datetime-local"
-        value={formData.targetDate.toISOString().slice(0, 16)}
+        value={new Date(
+          formData.targetDate.getTime() -
+            formData.targetDate.getTimezoneOffset() * 60000
+        )
+          .toISOString()
+          .slice(0, 16)}
         onChange={value => handleInputChange('targetDate', new Date(value))}
         disabled={isSubmitting}
       />
