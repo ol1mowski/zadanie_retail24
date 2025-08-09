@@ -74,7 +74,7 @@ export const useStopwatches = () => {
     };
 
     setStopwatches(prev => {
-      const updatedStopwatches = [...prev, newStopwatch];
+      const updatedStopwatches = [newStopwatch, ...prev];
       saveStopwatchesToCookies(updatedStopwatches);
       return updatedStopwatches;
     });

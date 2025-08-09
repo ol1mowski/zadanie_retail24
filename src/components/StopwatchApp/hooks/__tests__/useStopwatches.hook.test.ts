@@ -48,9 +48,9 @@ describe('useStopwatches', () => {
     });
 
     expect(result.current.stopwatches).toHaveLength(4);
-    expect(result.current.stopwatches[3].name).toBe('Nowy stoper');
-    expect(result.current.stopwatches[3].status).toBe('active');
-    expect(result.current.stopwatches[3].id).toBeDefined();
+    expect(result.current.stopwatches[0].name).toBe('Nowy stoper');
+    expect(result.current.stopwatches[0].status).toBe('active');
+    expect(result.current.stopwatches[0].id).toBeDefined();
   });
 
   it('should pause stopwatch', () => {
