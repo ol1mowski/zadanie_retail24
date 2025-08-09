@@ -12,11 +12,13 @@ export const HeaderLogo: React.FC<HeaderLogoProps> = ({ title, subtitle }) => {
         to="/"
         className="flex items-center hover:opacity-80 transition-opacity"
       >
-        <div className="text-2xl mr-3">⏰</div>
+        <div className="text-xl sm:text-2xl mr-2 sm:mr-3">⏰</div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+          <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
+            {title}
+          </h1>
           {subtitle && (
-            <p className="text-sm text-gray-600 -mt-1">{subtitle}</p>
+            <p className="text-xs sm:text-sm text-gray-600 -mt-1">{subtitle}</p>
           )}
         </div>
       </Link>

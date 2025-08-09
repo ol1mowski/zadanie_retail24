@@ -21,7 +21,7 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
   if (isReadOnly) {
     return (
       <div className="flex gap-2 justify-center">
-        <div className="px-4 py-2 bg-gray-100 text-gray-500 rounded-lg text-sm font-medium">
+        <div className="px-2 sm:px-3 md:px-4 py-1 sm:py-2 bg-gray-100 text-gray-500 rounded-lg text-xs sm:text-sm font-medium">
           Tryb podglądu
         </div>
       </div>
@@ -34,6 +34,7 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
         <Button
           variant="info"
           size="sm"
+          className="sm:text-base"
           onClick={() => onShare(stopwatch)}
           title={`Udostępnij stoper "${stopwatch.name}"`}
           aria-label={`Udostępnij stoper "${stopwatch.name}"`}
@@ -42,7 +43,12 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
         </Button>
       )}
 
-      <Button variant="error" size="sm" onClick={() => onRemove(id)}>
+      <Button
+        variant="error"
+        size="sm"
+        className="sm:text-base"
+        onClick={() => onRemove(id)}
+      >
         Usuń
       </Button>
     </div>

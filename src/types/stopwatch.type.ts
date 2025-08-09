@@ -26,6 +26,7 @@ export interface StopwatchGridProps {
   onRemove: (id: string) => void;
   onShare: (stopwatch: Stopwatch) => void;
   isLoading?: boolean;
+  hasCompletedStopwatches?: boolean;
 }
 
 export interface AddStopwatchModalProps {

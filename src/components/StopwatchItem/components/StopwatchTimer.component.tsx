@@ -28,8 +28,8 @@ export const StopwatchTimer: React.FC<StopwatchTimerProps> = ({
   }, [targetDate, isActive, isCompleted]);
 
   return (
-    <div className="mb-6">
-      <div className="text-xs sm:text-sm md:text-lg lg:text-2xl xl:text-3xl font-mono font-bold text-center bg-white/50 rounded-lg p-2 sm:p-3 md:p-4 backdrop-blur-sm break-all">
+    <div className="mb-3 sm:mb-4 md:mb-6">
+      <div className="text-lg sm:text-sm md:text-base lg:text-lg xl:text-xl font-mono font-bold text-center bg-white/50 rounded-lg p-1 sm:p-2 md:p-3 lg:p-4 backdrop-blur-sm break-all">
         {isCompleted ? (
           <span className="text-red-600">Czas minął!</span>
         ) : (
