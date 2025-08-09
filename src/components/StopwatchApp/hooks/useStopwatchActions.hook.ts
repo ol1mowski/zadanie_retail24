@@ -1,11 +1,15 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Stopwatch } from '../../../types/stopwatch.type';
+import type {
+  Stopwatch,
+  StopwatchFormData,
+} from '../../../types/stopwatch.type';
 import { generateShareLink } from '../../../utils/share.utils';
 import {
   saveStopwatchesToCookies,
   loadStopwatchesFromCookies,
 } from '../../../utils/cookies.utils';
+import { generateStopwatchId } from '../../../utils/stopwatch.utils';
 
 export type PopupShowFunction = (
   title: string,
@@ -88,8 +92,25 @@ export const useStopwatchActions = (
     [showPopup, currentOrigin]
   );
 
+  const addStopwatch = (data: StopwatchFormData) => {
+    const newStopwatch: Stopwatch = {
+      id: generateStopwatchId(),
+      name: data.name,
+      targetDate: data.targetDate,
+      status: 'active',
+      createdAt: new Date(),
+    };
+
+    setStopwatches?.(prev => {
+      const updatedStopwatches = [newStopwatch, ...prev];
+      saveStopwatchesToCookies(updatedStopwatches);
+      return updatedStopwatches;
+    });
+  };
+
   return {
     removeStopwatch,
     shareStopwatch,
+    addStopwatch,
   };
 };

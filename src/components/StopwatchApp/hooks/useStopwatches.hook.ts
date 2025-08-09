@@ -1,12 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
-import type {
-  Stopwatch,
-  StopwatchFormData,
-} from '../../../types/stopwatch.type';
-import {
-  generateStopwatchId,
-  isStopwatchCompleted,
-} from '../../../utils/stopwatch.utils';
+import type { Stopwatch } from '../../../types/stopwatch.type';
+import { isStopwatchCompleted } from '../../../utils/stopwatch.utils';
 import {
   saveStopwatchesToCookies,
   loadStopwatchesFromCookies,
@@ -29,7 +23,7 @@ export const useStopwatches = () => {
     showPopup,
   } = usePopup();
 
-  const { removeStopwatch, shareStopwatch } = useStopwatchActions(
+  const { removeStopwatch, shareStopwatch, addStopwatch } = useStopwatchActions(
     showPopup,
     setStopwatches
   );
@@ -64,26 +58,11 @@ export const useStopwatches = () => {
         },
       ];
       setStopwatches(sampleStopwatches);
+      saveStopwatchesToCookies(sampleStopwatches);
     }
 
     setIsLoading(false);
   }, []);
-
-  const addStopwatch = (data: StopwatchFormData) => {
-    const newStopwatch: Stopwatch = {
-      id: generateStopwatchId(),
-      name: data.name,
-      targetDate: data.targetDate,
-      status: 'active',
-      createdAt: new Date(),
-    };
-
-    setStopwatches(prev => {
-      const updatedStopwatches = [newStopwatch, ...prev];
-      saveStopwatchesToCookies(updatedStopwatches);
-      return updatedStopwatches;
-    });
-  };
 
   useEffect(() => {
     const interval = setInterval(() => {
