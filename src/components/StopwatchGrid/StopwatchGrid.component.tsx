@@ -2,6 +2,7 @@ import type { StopwatchGridProps } from '../../types/stopwatch.type';
 import { EmptyState } from './components/EmptyState.component';
 import { StopwatchList } from './components/StopwatchList.component';
 import { StopwatchCounter } from './components/StopwatchCounter.component';
+import { ScrollHint } from './components/ScrollHint.component';
 import { LoadingSpinner } from '../ui';
 import { isStopwatchCompleted } from '../../utils/stopwatch.utils';
 
@@ -25,6 +26,7 @@ export const StopwatchGrid: React.FC<StopwatchGridProps> = ({
 
   return (
     <div className="w-full">
+      <ScrollHint totalCount={stopwatches.length} visibleCount={3} />
       <StopwatchList
         stopwatches={stopwatches}
         onRemove={onRemove}
