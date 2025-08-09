@@ -21,7 +21,7 @@ export const StopwatchTimer: React.FC<StopwatchTimerProps> = ({
       const interval = setInterval(() => {
         const remaining = calculateTimeLeft(targetDate);
         setTimeLeft(remaining);
-      }, 1);
+      }, 16);
 
       return () => clearInterval(interval);
     }
@@ -29,11 +29,11 @@ export const StopwatchTimer: React.FC<StopwatchTimerProps> = ({
 
   return (
     <div className="mb-6">
-      <div className="text-3xl font-mono font-bold text-center bg-white/50 rounded-lg p-4 backdrop-blur-sm">
+      <div className="text-xs sm:text-sm md:text-lg lg:text-2xl xl:text-3xl font-mono font-bold text-center bg-white/50 rounded-lg p-2 sm:p-3 md:p-4 backdrop-blur-sm break-all">
         {isCompleted ? (
           <span className="text-red-600">Czas minął!</span>
         ) : (
-          formatTime(timeLeft)
+          <span className="whitespace-nowrap">{formatTime(timeLeft)}</span>
         )}
       </div>
     </div>

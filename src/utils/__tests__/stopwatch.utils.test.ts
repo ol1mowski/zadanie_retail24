@@ -38,7 +38,7 @@ describe('stopwatch.utils', () => {
       const oneSecond = 1000;
 
       const time = oneDay + oneHour + oneMinute + oneSecond;
-      expect(formatTime(time)).toBe('01:01:01:01');
+      expect(formatTime(time)).toBe('01:01:01:01:000');
     });
   });
 
