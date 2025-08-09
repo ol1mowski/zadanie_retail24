@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { PopupContent, PopupActions, type PopupType } from './components';
+import { useGlobalPopup } from './hooks/useGlobalPopup.hook';
 
 interface GlobalPopupProps {
   isVisible: boolean;
@@ -30,31 +30,14 @@ export const GlobalPopup: React.FC<GlobalPopupProps> = ({
   shareLink,
   children,
 }) => {
-  useEffect(() => {
-    if (
-      isVisible &&
-      autoHideDuration > 0 &&
-      showAutoHide &&
-      !onConfirm &&
-      type !== 'form'
-    ) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, autoHideDuration);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isVisible, autoHideDuration, onClose, showAutoHide, onConfirm, type]);
-
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
-  const handleContainerClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
+  const { handleOverlayClick, handleContainerClick } = useGlobalPopup({
+    isVisible,
+    autoHideDuration,
+    showAutoHide,
+    onConfirm,
+    type,
+    onClose,
+  });
 
   if (!isVisible) return null;
 
