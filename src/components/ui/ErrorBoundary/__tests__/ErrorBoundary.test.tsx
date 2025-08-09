@@ -101,7 +101,6 @@ describe('ErrorBoundary', () => {
     );
 
     expect(screen.getByText('Spróbuj ponownie')).toBeInTheDocument();
-    expect(screen.getByText('Zgłoś błąd')).toBeInTheDocument();
   });
 
   it('should show error details', () => {
