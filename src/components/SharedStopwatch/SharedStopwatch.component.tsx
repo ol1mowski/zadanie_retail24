@@ -13,8 +13,7 @@ import {
 export const SharedStopwatch: React.FC = () => {
   const navigate = useNavigate();
   const { sharedStopwatch, isLoading, error, errorType } = useSharedStopwatch();
-  const { localStopwatch, setLocalStopwatch } =
-    useSharedStopwatchState(sharedStopwatch);
+  const { localStopwatch } = useSharedStopwatchState(sharedStopwatch);
   const {
     popupMessage,
     isPopupVisible,
@@ -26,11 +25,7 @@ export const SharedStopwatch: React.FC = () => {
     showPopup,
   } = usePopup();
 
-  const { removeStopwatch, shareStopwatch } = useStopwatchActions(
-    showPopup,
-    undefined,
-    setLocalStopwatch
-  );
+  const { removeStopwatch, shareStopwatch } = useStopwatchActions(showPopup);
 
   if (isLoading) {
     return (
