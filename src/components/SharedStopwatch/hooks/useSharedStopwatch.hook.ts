@@ -110,7 +110,7 @@ export const useSharedStopwatch = () => {
     };
 
     handleSharedStopwatch();
-  }, [id]);
+  }, [id, location.pathname, location.search]);
 
   const clearSharedStopwatch = () => {
     setSharedStopwatch(null);

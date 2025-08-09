@@ -41,7 +41,7 @@ describe('share.utils', () => {
 
       expect(parsed.id).toBe(mockStopwatch.id);
       expect(parsed.name).toBe(mockStopwatch.name);
-      expect(parsed.status).toBe(mockStopwatch.status);
+      expect(parsed.targetDate).toBe(mockStopwatch.targetDate.toISOString());
     });
 
     it('should handle encoding error gracefully', () => {
@@ -65,15 +65,14 @@ describe('share.utils', () => {
 
       expect(result.id).toBe(mockStopwatch.id);
       expect(result.name).toBe(mockStopwatch.name);
-      expect(result.status).toBe(mockStopwatch.status);
+      expect(result.status).toBe('active');
       expect(result.targetDate).toBeInstanceOf(Date);
       expect(result.createdAt).toBeInstanceOf(Date);
       expect(result.targetDate.getTime()).toBe(
         mockStopwatch.targetDate.getTime()
       );
-      expect(result.createdAt.getTime()).toBe(
-        mockStopwatch.createdAt.getTime()
-      );
+      // createdAt jest generowane na nowo, więc sprawdzamy tylko że jest Date
+      expect(result.createdAt.getTime()).toBeGreaterThan(0);
     });
 
     it('should handle invalid base64 data', () => {
@@ -93,8 +92,6 @@ describe('share.utils', () => {
         id: 'test-id',
         name: 'Test Name',
         targetDate: '2024-12-31T23:59:59.000Z',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        status: 'active' as const,
       };
 
       expect(isValidStopwatchData(validData)).toBe(true);
@@ -115,13 +112,11 @@ describe('share.utils', () => {
       expect(isValidStopwatchData(invalidData)).toBe(false);
     });
 
-    it('should reject invalid status values', () => {
+    it('should reject name too long', () => {
       const invalidData = {
         id: 'test-id',
-        name: 'Test Name',
+        name: 'A'.repeat(51), // 51 znaków - za długie
         targetDate: '2024-12-31T23:59:59.000Z',
-        createdAt: '2024-01-01T00:00:00.000Z',
-        status: 'invalid-status',
       };
 
       expect(isValidStopwatchData(invalidData)).toBe(false);
@@ -258,13 +253,11 @@ describe('share.utils', () => {
 
       expect(decoded.id).toBe(mockStopwatch.id);
       expect(decoded.name).toBe(mockStopwatch.name);
-      expect(decoded.status).toBe(mockStopwatch.status);
+      expect(decoded.status).toBe('active');
       expect(decoded.targetDate.getTime()).toBe(
         mockStopwatch.targetDate.getTime()
       );
-      expect(decoded.createdAt.getTime()).toBe(
-        mockStopwatch.createdAt.getTime()
-      );
+      expect(decoded.createdAt.getTime()).toBeGreaterThan(0);
     });
   });
 });
