@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "5173:5173"
+    container_name: stopwatch-app-dev
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./package.json:/app/package.json
+    restart: unless-stopped
