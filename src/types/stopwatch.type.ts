@@ -29,6 +29,7 @@ export interface StopwatchGridProps {
   onPause: (id: string) => void;
   onResume: (id: string) => void;
   onShare: (stopwatch: Stopwatch) => void;
+  isLoading?: boolean;
 }
 
 export interface AddStopwatchModalProps {

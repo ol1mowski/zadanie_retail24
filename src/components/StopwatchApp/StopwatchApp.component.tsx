@@ -7,6 +7,7 @@ import type { Stopwatch } from '../../types/stopwatch.type';
 export const StopwatchApp: React.FC = () => {
   const {
     stopwatches,
+    isLoading,
     addStopwatch,
     removeStopwatch,
     pauseStopwatch,
@@ -57,6 +58,7 @@ export const StopwatchApp: React.FC = () => {
           onPause={pauseStopwatch}
           onResume={resumeStopwatch}
           onShare={handleShare}
+          isLoading={isLoading}
         />
       </Layout>
     </>

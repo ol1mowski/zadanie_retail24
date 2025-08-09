@@ -8,7 +8,7 @@ export const useSharedStopwatch = () => {
   const [sharedStopwatch, setSharedStopwatch] = useState<Stopwatch | null>(
     null
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [errorType, setErrorType] = useState<
     'invalid_url' | 'invalid_data' | 'network' | 'unknown' | null

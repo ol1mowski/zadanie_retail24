@@ -16,6 +16,7 @@ import { useStopwatchActions } from '../../../hooks/useStopwatchActions.hook';
 
 export const useStopwatches = () => {
   const [stopwatches, setStopwatches] = useState<Stopwatch[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const completedStopwatchesRef = useRef<Set<string>>(new Set());
   const {
     popupMessage,
@@ -62,6 +63,8 @@ export const useStopwatches = () => {
       ];
       setStopwatches(sampleStopwatches);
     }
+
+    setIsLoading(false);
   }, []);
 
   const addStopwatch = (data: StopwatchFormData) => {
@@ -109,6 +112,7 @@ export const useStopwatches = () => {
 
   return {
     stopwatches,
+    isLoading,
     addStopwatch,
     removeStopwatch: (id: string) => {
       const stopwatch = stopwatches.find(s => s.id === id);
