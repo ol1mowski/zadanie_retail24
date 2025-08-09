@@ -80,12 +80,6 @@ export class ErrorBoundary extends Component<
     this.resetError();
   };
 
-  private handleReportError = (): void => {
-    if (this.state.error) {
-      console.log('Reporting error to support team...');
-    }
-  };
-
   render(): ReactNode {
     if (this.state.hasError) {
       if (this.props.fallback) {
@@ -106,24 +100,24 @@ export class ErrorBoundary extends Component<
 
             {this.state.error && (
               <details className="mt-4 p-4 bg-gray-100 rounded-lg text-sm">
-                <summary className="cursor-pointer font-medium mb-2">
+                <summary className="text-black cursor-pointer font-medium mb-2">
                   Szczegóły błędu (tylko w trybie deweloperskim)
                 </summary>
-                <div className="space-y-2">
+                <div className="space-y-2 text-black">
                   <div>
                     <strong>Błąd:</strong> {this.state.error.message}
                   </div>
                   {this.state.errorInfo && (
                     <div>
                       <strong>Stack komponentu:</strong>
-                      <pre className="mt-1 text-xs overflow-auto">
+                      <pre className="mt-1 text-black text-xs overflow-auto">
                         {this.state.errorInfo.componentStack}
                       </pre>
                     </div>
                   )}
                   <div>
                     <strong>Stack błędu:</strong>
-                    <pre className="mt-1 text-xs overflow-auto">
+                    <pre className="mt-1 text-black text-xs overflow-auto">
                       {this.state.error.stack}
                     </pre>
                   </div>
@@ -137,12 +131,6 @@ export class ErrorBoundary extends Component<
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
               >
                 Spróbuj ponownie
-              </button>
-              <button
-                onClick={this.handleReportError}
-                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
-              >
-                Zgłoś błąd
               </button>
             </div>
           </div>
