@@ -10,8 +10,6 @@ export const StopwatchApp: React.FC = () => {
     isLoading,
     addStopwatch,
     removeStopwatch,
-    pauseStopwatch,
-    resumeStopwatch,
     shareStopwatch,
     popupMessage,
     popupTitle,
@@ -55,8 +53,6 @@ export const StopwatchApp: React.FC = () => {
         <StopwatchGrid
           stopwatches={stopwatches}
           onRemove={removeStopwatch}
-          onPause={pauseStopwatch}
-          onResume={resumeStopwatch}
           onShare={handleShare}
           isLoading={isLoading}
         />

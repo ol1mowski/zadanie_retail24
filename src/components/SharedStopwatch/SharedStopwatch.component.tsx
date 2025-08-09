@@ -26,8 +26,11 @@ export const SharedStopwatch: React.FC = () => {
     showPopup,
   } = usePopup();
 
-  const { removeStopwatch, pauseStopwatch, resumeStopwatch, shareStopwatch } =
-    useStopwatchActions(showPopup, undefined, setLocalStopwatch);
+  const { removeStopwatch, shareStopwatch } = useStopwatchActions(
+    showPopup,
+    undefined,
+    setLocalStopwatch
+  );
 
   if (isLoading) {
     return (
@@ -57,14 +60,6 @@ export const SharedStopwatch: React.FC = () => {
           removeStopwatch(sharedStopwatch, () => {
             navigate('/');
           });
-        }}
-        onPause={() => {
-          if (!localStopwatch) return;
-          pauseStopwatch(localStopwatch);
-        }}
-        onResume={() => {
-          if (!localStopwatch) return;
-          resumeStopwatch(localStopwatch);
         }}
         onShare={() => {
           if (!localStopwatch) return;

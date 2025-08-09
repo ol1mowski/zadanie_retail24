@@ -29,8 +29,10 @@ export const useStopwatches = () => {
     showPopup,
   } = usePopup();
 
-  const { pauseStopwatch, resumeStopwatch, removeStopwatch, shareStopwatch } =
-    useStopwatchActions(showPopup, setStopwatches);
+  const { removeStopwatch, shareStopwatch } = useStopwatchActions(
+    showPopup,
+    setStopwatches
+  );
 
   useEffect(() => {
     const savedStopwatches = loadStopwatchesFromCookies();
@@ -50,7 +52,7 @@ export const useStopwatches = () => {
           id: '2',
           name: 'Deadline projektu',
           targetDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-          status: 'paused',
+          status: 'active',
           createdAt: new Date(),
         },
         {
@@ -120,8 +122,6 @@ export const useStopwatches = () => {
         removeStopwatch(id, () => closePopup());
       }
     },
-    pauseStopwatch,
-    resumeStopwatch,
     shareStopwatch,
     popupMessage,
     popupTitle,

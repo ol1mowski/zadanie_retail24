@@ -11,8 +11,6 @@ import { StopwatchCompletedMessage } from './components/StopwatchCompletedMessag
 export const StopwatchItem: React.FC<StopwatchItemProps> = ({
   stopwatch,
   onRemove,
-  onPause,
-  onResume,
   onShare,
   isReadOnly = false,
 }) => {
@@ -32,11 +30,8 @@ export const StopwatchItem: React.FC<StopwatchItemProps> = ({
   }, [stopwatch]);
 
   return (
-    <StopwatchCard status={stopwatch.status} isCompleted={isCompleted}>
-      <StopwatchStatusBadge
-        status={stopwatch.status}
-        isCompleted={isCompleted}
-      />
+    <StopwatchCard isCompleted={isCompleted}>
+      <StopwatchStatusBadge isCompleted={isCompleted} />
 
       <StopwatchHeader
         name={stopwatch.name}
@@ -51,12 +46,9 @@ export const StopwatchItem: React.FC<StopwatchItemProps> = ({
 
       <StopwatchActions
         id={stopwatch.id}
-        status={stopwatch.status}
         isCompleted={isCompleted}
         stopwatch={stopwatch}
         onRemove={onRemove}
-        onPause={onPause}
-        onResume={onResume}
         onShare={onShare}
         isReadOnly={isReadOnly}
       />

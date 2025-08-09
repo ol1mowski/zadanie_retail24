@@ -1,26 +1,20 @@
-import type { Stopwatch, StopwatchStatus } from '../../../types/stopwatch.type';
+import type { Stopwatch } from '../../../types/stopwatch.type';
 import { Button } from '../../ui/Button/Button.component';
 
 interface StopwatchActionsProps {
   id: string;
-  status: StopwatchStatus;
   isCompleted: boolean;
   stopwatch: Stopwatch;
   onRemove: (id: string) => void;
-  onPause: (id: string) => void;
-  onResume: (id: string) => void;
   onShare: (stopwatch: Stopwatch) => void;
   isReadOnly?: boolean;
 }
 
 export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
   id,
-  status,
   isCompleted,
   stopwatch,
   onRemove,
-  onPause,
-  onResume,
   onShare,
   isReadOnly = false,
 }) => {
@@ -36,20 +30,6 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
 
   return (
     <div className="flex gap-2 justify-center">
-      {!isCompleted && (
-        <>
-          {status === 'active' ? (
-            <Button variant="warning" size="sm" onClick={() => onPause(id)}>
-              Wstrzymaj
-            </Button>
-          ) : (
-            <Button variant="success" size="sm" onClick={() => onResume(id)}>
-              Wznów
-            </Button>
-          )}
-        </>
-      )}
-
       {!isCompleted && (
         <Button
           variant="info"

@@ -54,32 +54,6 @@ describe('useStopwatches', () => {
     expect(result.current.stopwatches[0].id).toBeDefined();
   });
 
-  it('should pause stopwatch', () => {
-    const { result } = renderHook(() => useStopwatches());
-
-    act(() => {
-      result.current.pauseStopwatch('1');
-    });
-
-    const pausedStopwatch = result.current.stopwatches.find(s => s.id === '1');
-    expect(pausedStopwatch?.status).toBe('paused');
-  });
-
-  it('should resume stopwatch', () => {
-    const { result } = renderHook(() => useStopwatches());
-
-    act(() => {
-      result.current.pauseStopwatch('1');
-    });
-
-    act(() => {
-      result.current.resumeStopwatch('1');
-    });
-
-    const resumedStopwatch = result.current.stopwatches.find(s => s.id === '1');
-    expect(resumedStopwatch?.status).toBe('active');
-  });
-
   it('should show confirmation popup when removing stopwatch', () => {
     const { result } = renderHook(() => useStopwatches());
 

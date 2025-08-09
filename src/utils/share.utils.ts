@@ -47,7 +47,7 @@ export const isValidStopwatchData = (
     typeof stopwatch.name === 'string' &&
     typeof stopwatch.targetDate === 'string' &&
     typeof stopwatch.createdAt === 'string' &&
-    (stopwatch.status === 'active' || stopwatch.status === 'paused') &&
+    stopwatch.status === 'active' &&
     !isNaN(new Date(stopwatch.targetDate).getTime()) &&
     !isNaN(new Date(stopwatch.createdAt).getTime())
   );

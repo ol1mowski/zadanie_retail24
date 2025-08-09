@@ -1,4 +1,4 @@
-export type StopwatchStatus = 'active' | 'completed' | 'paused';
+export type StopwatchStatus = 'active' | 'completed';
 
 export interface Stopwatch {
   id: string;
@@ -17,8 +17,6 @@ export interface StopwatchFormData {
 export interface StopwatchItemProps {
   stopwatch: Stopwatch;
   onRemove: (id: string) => void;
-  onPause: (id: string) => void;
-  onResume: (id: string) => void;
   onShare: (stopwatch: Stopwatch) => void;
   isReadOnly?: boolean;
 }
@@ -26,8 +24,6 @@ export interface StopwatchItemProps {
 export interface StopwatchGridProps {
   stopwatches: Stopwatch[];
   onRemove: (id: string) => void;
-  onPause: (id: string) => void;
-  onResume: (id: string) => void;
   onShare: (stopwatch: Stopwatch) => void;
   isLoading?: boolean;
 }

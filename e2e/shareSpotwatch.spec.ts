@@ -42,7 +42,6 @@ test('should share stopwatch and access via shared URL', async ({ page }) => {
 
   await expect(page.getByText('Stoper do Udostępnienia')).toBeVisible();
 
-  await expect(page.getByRole('button', { name: 'Wstrzymaj' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Usuń' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Udostępnij' })).toBeVisible();
 

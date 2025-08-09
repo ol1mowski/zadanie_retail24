@@ -31,60 +31,6 @@ export const useStopwatchActions = (
     routerNavigate = navigate || (() => {});
   }
 
-  const pauseStopwatch = useCallback(
-    (stopwatch: Stopwatch | string) => {
-      const stopwatchId =
-        typeof stopwatch === 'string' ? stopwatch : stopwatch.id;
-      const targetStopwatch = typeof stopwatch === 'string' ? null : stopwatch;
-
-      const savedStopwatches = loadStopwatchesFromCookies();
-      const updatedStopwatches = savedStopwatches.map(sw =>
-        sw.id === stopwatchId ? { ...sw, status: 'paused' as const } : sw
-      );
-      saveStopwatchesToCookies(updatedStopwatches);
-
-      if (setStopwatches) {
-        setStopwatches(prev =>
-          prev.map(sw =>
-            sw.id === stopwatchId ? { ...sw, status: 'paused' as const } : sw
-          )
-        );
-      }
-
-      if (setLocalStopwatch && targetStopwatch) {
-        setLocalStopwatch({ ...targetStopwatch, status: 'paused' as const });
-      }
-    },
-    [setStopwatches, setLocalStopwatch]
-  );
-
-  const resumeStopwatch = useCallback(
-    (stopwatch: Stopwatch | string) => {
-      const stopwatchId =
-        typeof stopwatch === 'string' ? stopwatch : stopwatch.id;
-      const targetStopwatch = typeof stopwatch === 'string' ? null : stopwatch;
-
-      const savedStopwatches = loadStopwatchesFromCookies();
-      const updatedStopwatches = savedStopwatches.map(sw =>
-        sw.id === stopwatchId ? { ...sw, status: 'active' as const } : sw
-      );
-      saveStopwatchesToCookies(updatedStopwatches);
-
-      if (setStopwatches) {
-        setStopwatches(prev =>
-          prev.map(sw =>
-            sw.id === stopwatchId ? { ...sw, status: 'active' as const } : sw
-          )
-        );
-      }
-
-      if (setLocalStopwatch && targetStopwatch) {
-        setLocalStopwatch({ ...targetStopwatch, status: 'active' as const });
-      }
-    },
-    [setStopwatches, setLocalStopwatch]
-  );
-
   const removeStopwatch = useCallback(
     (stopwatch: Stopwatch | string, onConfirm?: () => void) => {
       const stopwatchId =
@@ -135,8 +81,6 @@ export const useStopwatchActions = (
   );
 
   return {
-    pauseStopwatch,
-    resumeStopwatch,
     removeStopwatch,
     shareStopwatch,
   };

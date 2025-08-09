@@ -1,17 +1,13 @@
-import type { StopwatchStatus } from '../../../types/stopwatch.type';
-
 interface StopwatchStatusBadgeProps {
-  status: StopwatchStatus;
   isCompleted: boolean;
 }
 
 export const StopwatchStatusBadge: React.FC<StopwatchStatusBadgeProps> = ({
-  status,
   isCompleted,
 }) => {
   const getStatusText = (): string => {
     if (isCompleted) return 'Ukończony';
-    if (status === 'paused') return 'Wstrzymany';
+
     return 'Aktywny';
   };
 

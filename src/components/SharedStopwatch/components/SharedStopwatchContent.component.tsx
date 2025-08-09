@@ -6,16 +6,12 @@ import { SEO } from '../../ui';
 interface SharedStopwatchContentProps {
   stopwatch: Stopwatch | null;
   onRemove: () => void;
-  onPause: () => void;
-  onResume: () => void;
   onShare: () => void;
 }
 
 export const SharedStopwatchContent: React.FC<SharedStopwatchContentProps> = ({
   stopwatch,
   onRemove,
-  onPause,
-  onResume,
   onShare,
 }) => {
   if (!stopwatch) {
@@ -26,7 +22,7 @@ export const SharedStopwatchContent: React.FC<SharedStopwatchContentProps> = ({
     <>
       <SEO
         title={`${stopwatch.name} - Udostępniony stoper`}
-        description={`Udostępniony stoper: ${stopwatch.name}. Status: ${stopwatch.status === 'active' ? 'aktywny' : stopwatch.status === 'paused' ? 'wstrzymany' : 'zakończony'}.`}
+        description={`Udostępniony stoper: ${stopwatch.name}. Status: ${stopwatch.status === 'active' ? 'aktywny' : 'zakończony'}.`}
         ogTitle={`${stopwatch.name} - Udostępniony stoper`}
         ogDescription={`Udostępniony stoper: ${stopwatch.name}`}
         twitterTitle={`${stopwatch.name} - Udostępniony stoper`}
@@ -42,8 +38,6 @@ export const SharedStopwatchContent: React.FC<SharedStopwatchContentProps> = ({
             <StopwatchItem
               stopwatch={stopwatch}
               onRemove={onRemove}
-              onPause={onPause}
-              onResume={onResume}
               onShare={onShare}
               isReadOnly={false}
             />

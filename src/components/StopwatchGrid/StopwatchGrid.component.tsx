@@ -7,8 +7,6 @@ import { LoadingSpinner } from '../ui';
 export const StopwatchGrid: React.FC<StopwatchGridProps> = ({
   stopwatches,
   onRemove,
-  onPause,
-  onResume,
   onShare,
   isLoading = false,
 }) => {
@@ -25,8 +23,6 @@ export const StopwatchGrid: React.FC<StopwatchGridProps> = ({
       <StopwatchList
         stopwatches={stopwatches}
         onRemove={onRemove}
-        onPause={onPause}
-        onResume={onResume}
         onShare={onShare}
       />
       <StopwatchCounter count={stopwatches.length} />

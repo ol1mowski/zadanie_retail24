@@ -4,8 +4,6 @@ import { StopwatchItem } from '../../StopwatchItem';
 export const StopwatchList: React.FC<StopwatchGridProps> = ({
   stopwatches,
   onRemove,
-  onPause,
-  onResume,
   onShare,
 }) => {
   return (
@@ -19,8 +17,6 @@ export const StopwatchList: React.FC<StopwatchGridProps> = ({
                 onShare={onShare}
                 stopwatch={stopwatch}
                 onRemove={onRemove}
-                onPause={onPause}
-                onResume={onResume}
               />
             ))}
           </div>
