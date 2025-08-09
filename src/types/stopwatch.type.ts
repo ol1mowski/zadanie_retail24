@@ -19,7 +19,7 @@ export interface StopwatchItemProps {
   onRemove: (id: string) => void;
   onPause: (id: string) => void;
   onResume: (id: string) => void;
-  onShare: (link: string) => void;
+  onShare: (stopwatch: Stopwatch) => void;
   isReadOnly?: boolean;
 }
 
@@ -28,7 +28,7 @@ export interface StopwatchGridProps {
   onRemove: (id: string) => void;
   onPause: (id: string) => void;
   onResume: (id: string) => void;
-  onShare: (link: string) => void;
+  onShare: (stopwatch: Stopwatch) => void;
 }
 
 export interface AddStopwatchModalProps {

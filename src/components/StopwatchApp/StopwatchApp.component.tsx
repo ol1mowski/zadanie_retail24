@@ -2,6 +2,7 @@ import { Layout } from '../Layout/Layout.component';
 import { useStopwatches } from './hooks/useStopwatches.hook';
 import { StopwatchGrid } from '../StopwatchGrid';
 import { SEO } from '../ui';
+import type { Stopwatch } from '../../types/stopwatch.type';
 
 export const StopwatchApp: React.FC = () => {
   const {
@@ -20,8 +21,8 @@ export const StopwatchApp: React.FC = () => {
     closePopup,
   } = useStopwatches();
 
-  const handleShare = (link: string) => {
-    shareStopwatch(link);
+  const handleShare = (stopwatch: Stopwatch) => {
+    shareStopwatch(stopwatch);
   };
 
   return (

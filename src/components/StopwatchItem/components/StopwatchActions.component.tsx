@@ -1,6 +1,5 @@
 import type { Stopwatch, StopwatchStatus } from '../../../types/stopwatch.type';
 import { Button } from '../../ui/Button/Button.component';
-import { generateShareLink } from '../../../utils/share.utils';
 
 interface StopwatchActionsProps {
   id: string;
@@ -10,7 +9,7 @@ interface StopwatchActionsProps {
   onRemove: (id: string) => void;
   onPause: (id: string) => void;
   onResume: (id: string) => void;
-  onShare: (link: string) => void;
+  onShare: (stopwatch: Stopwatch) => void;
   isReadOnly?: boolean;
 }
 
@@ -55,7 +54,7 @@ export const StopwatchActions: React.FC<StopwatchActionsProps> = ({
         <Button
           variant="info"
           size="sm"
-          onClick={() => onShare(generateShareLink(stopwatch))}
+          onClick={() => onShare(stopwatch)}
           title={`Udostępnij stoper "${stopwatch.name}"`}
           aria-label={`Udostępnij stoper "${stopwatch.name}"`}
         >
