@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Stopwatch } from '../types/stopwatch.type';
-import { generateShareLink } from '../utils/share.utils';
+import type { Stopwatch } from '../../../types/stopwatch.type';
+import { generateShareLink } from '../../../utils/share.utils';
 import {
   saveStopwatchesToCookies,
   loadStopwatchesFromCookies,
-} from '../utils/cookies.utils';
+} from '../../../utils/cookies.utils';
 
 export type PopupShowFunction = (
   title: string,

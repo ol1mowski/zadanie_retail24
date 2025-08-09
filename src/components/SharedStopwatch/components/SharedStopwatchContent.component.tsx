@@ -5,14 +5,10 @@ import { SEO } from '../../ui';
 
 interface SharedStopwatchContentProps {
   stopwatch: Stopwatch | null;
-  onRemove: () => void;
-  onShare: () => void;
 }
 
 export const SharedStopwatchContent: React.FC<SharedStopwatchContentProps> = ({
   stopwatch,
-  onRemove,
-  onShare,
 }) => {
   if (!stopwatch) {
     return null;
@@ -35,12 +31,7 @@ export const SharedStopwatchContent: React.FC<SharedStopwatchContentProps> = ({
       >
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <StopwatchItem
-              stopwatch={stopwatch}
-              onRemove={onRemove}
-              onShare={onShare}
-              isReadOnly={false}
-            />
+            <StopwatchItem stopwatch={stopwatch} isReadOnly={true} />
           </div>
         </div>
       </Layout>

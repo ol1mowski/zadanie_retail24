@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import type { Stopwatch } from '../../../types/stopwatch.type';
 import { decodeStopwatchData } from '../../../utils/share.utils';
-import { loadStopwatchesFromCookies } from '../../../utils/cookies.utils';
 
 export const useSharedStopwatch = () => {
   const { id } = useParams<{ id: string }>();
@@ -53,19 +52,6 @@ export const useSharedStopwatch = () => {
 
         if (decodedStopwatch.id !== id) {
           setError('Dane stopera są nieprawidłowe - ID nie zgadza się');
-          setErrorType('invalid_data');
-          setIsLoading(false);
-          return;
-        }
-
-        // Sprawdź czy stoper istnieje w cookies (czy nie został usunięty)
-        const savedStopwatches = loadStopwatchesFromCookies();
-        const stopwatchExistsInCookies = savedStopwatches.some(
-          sw => sw.id === decodedStopwatch.id
-        );
-
-        if (!stopwatchExistsInCookies) {
-          setError('Ten stoper został usunięty i nie jest już dostępny');
           setErrorType('invalid_data');
           setIsLoading(false);
           return;

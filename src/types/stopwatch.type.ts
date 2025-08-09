@@ -16,8 +16,8 @@ export interface StopwatchFormData {
 
 export interface StopwatchItemProps {
   stopwatch: Stopwatch;
-  onRemove: (id: string) => void;
-  onShare: (stopwatch: Stopwatch) => void;
+  onRemove?: (id: string) => void;
+  onShare?: (stopwatch: Stopwatch) => void;
   isReadOnly?: boolean;
 }
 

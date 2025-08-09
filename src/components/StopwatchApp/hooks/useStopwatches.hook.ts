@@ -12,7 +12,7 @@ import {
   loadStopwatchesFromCookies,
 } from '../../../utils/cookies.utils';
 import { usePopup } from '../../../hooks/usePopup.hook';
-import { useStopwatchActions } from '../../../hooks/useStopwatchActions.hook';
+import { useStopwatchActions } from './useStopwatchActions.hook';
 
 export const useStopwatches = () => {
   const [stopwatches, setStopwatches] = useState<Stopwatch[]>([]);

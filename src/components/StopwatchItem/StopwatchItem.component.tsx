@@ -48,8 +48,8 @@ export const StopwatchItem: React.FC<StopwatchItemProps> = ({
         id={stopwatch.id}
         isCompleted={isCompleted}
         stopwatch={stopwatch}
-        onRemove={onRemove}
-        onShare={onShare}
+        onRemove={onRemove || (() => {})}
+        onShare={onShare || (() => {})}
         isReadOnly={isReadOnly}
       />
 
