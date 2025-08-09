@@ -1,188 +1,313 @@
-# Aplikacja Stoperów
+# 🕐 Aplikacja Stoperów - Retail24
 
-Nowoczesna aplikacja do zarządzania stoperami odliczającymi czas do ważnych wydarzeń, zbudowana w React 19 + TypeScript.
+Nowoczesna aplikacja webowa do zarządzania stoperami odliczającymi czas z dokładnością do milisekundy. Aplikacja umożliwia tworzenie, udostępnianie i zarządzanie stoperami z intuicyjnym interfejsem użytkownika.
 
-## 🚀 Technologie
+## ✨ Funkcjonalności
 
-- **React 19** - Najnowsza wersja biblioteki React
-- **TypeScript** - Statyczne typowanie
-- **Vite** - Szybki bundler i dev server
-- **Tailwind CSS 3.4** - Utility-first CSS framework
-- **PostCSS** - Przetwarzanie CSS
-- **Autoprefixer** - Automatyczne dodawanie vendor prefixes
-- **Vitest** - Framework testowy
-- **@testing-library/react** - Testowanie komponentów React
-- **Husky** - Git hooks
-- **lint-staged** - Uruchamianie linterów na staged files
-- **commitlint** - Walidacja commit messages
-- **ESLint** - Linter JavaScript/TypeScript
-- **Prettier** - Formatter kodu
+### 🎯 Podstawowe funkcje
 
-## 📦 Instalacja
+- **Odliczanie czasu** - stoper z dokładnością do milisekundy
+- **Zarządzanie stoperami** - dodawanie, usuwanie, wstrzymywanie
+- **Układ responsywny** - 3 stopery w rzędzie z automatycznym przewijaniem
+- **Persystencja danych** - zapisywanie w Cookies przeglądarki
+- **Powiadomienia** - automatyczne komunikaty o zakończeniu stoperów
 
-```bash
-npm install
-```
+### 🔗 Funkcje zaawansowane
 
-## 🛠️ Skrypty
+- **Udostępnianie stoperów** - generowanie linków do współdzielenia
+- **Tryb podglądu** - wyświetlanie udostępnionych stoperów
+- **Statystyki** - podsumowanie aktywnych i zakończonych stoperów
+- **Responsywny design** - optymalizacja dla różnych urządzeń
 
-### Development
+## 🛠️ Technologie
 
-```bash
-npm run dev          # Uruchomienie dev servera
-npm run build        # Build produkcyjny
-npm run preview      # Podgląd builda
-```
+### Frontend
+
+- **React 19.1.0** - najnowsza wersja z Concurrent Features
+- **TypeScript 5.8.3** - pełne typowanie dla lepszej jakości kodu
+- **Vite 7.0.4** - szybki bundler i dev server
+- **Tailwind CSS 3.4.3** - utility-first CSS framework
+- **React Router DOM 7.7.1** - routing aplikacji
 
 ### Testy
 
+- **Vitest 3.2.4** - unit testing framework
+- **Playwright 1.40.0** - end-to-end testing
+- **Testing Library** - testowanie komponentów React
+- **66 testów** - pokrycie wszystkich głównych funkcjonalności
+
+### DevOps & Quality
+
+- **Docker** - konteneryzacja aplikacji
+- **Docker Hub** - rejestr obrazów
+- **GitHub Actions** - CI/CD pipeline
+- **Husky** - git hooks
+- **Commitlint** - konwencje commitów
+- **ESLint + Prettier** - linting i formatowanie kodu
+- **TypeScript** - sprawdzanie typów
+
+## 🚀 Szybki start
+
+### Wymagania
+
+- Node.js 20+
+- npm lub yarn
+
+### Instalacja
+
 ```bash
-npm run test         # Uruchomienie testów w trybie watch
-npm run test:run     # Jednorazowe uruchomienie testów
-npm run test:ui      # UI dla testów
-npm run test:coverage # Testy z pokryciem
+# Klonowanie repozytorium
+git clone https://github.com/ol1mowski/zadanie_retail24.git
+cd zadanie_retail24
+
+# Instalacja zależności
+npm install
+
+# Uruchomienie w trybie deweloperskim
+npm run dev
 ```
 
-### Code Quality
+### Docker
 
 ```bash
-npm run lint         # ESLint
-npm run format       # Prettier format
-npm run format:check # Sprawdzenie formatowania
-npm run type-check   # Sprawdzenie typów TypeScript
+# Uruchomienie z Docker Compose
+docker-compose up
+
+# Lub budowanie obrazu
+docker build -t stopwatch-app .
+docker run -p 5173:5173 stopwatch-app
 ```
 
-## 🏗️ Struktura Projektu
+## 📋 Dostępne skrypty
+
+```bash
+# Development
+npm run dev              # Uruchomienie dev server
+npm run build           # Budowanie produkcyjne
+npm run preview         # Podgląd build
+
+# Testy
+npm test               # Uruchomienie testów
+npm run test:unit      # Unit testy
+npm run test:e2e       # End-to-end testy
+npm run test:coverage  # Pokrycie testami
+
+# Quality
+npm run lint           # ESLint
+npm run format         # Prettier
+npm run type-check     # TypeScript check
+```
+
+## 🏗️ Architektura
+
+### Struktura projektu
 
 ```
 src/
-├── components/                    # Komponenty React
-│   ├── StopwatchApp.component.tsx        # Główny komponent aplikacji
-│   ├── StopwatchGrid.component.tsx       # Siatka stoperów
-│   ├── AddStopwatchModal.component.tsx   # Modal dodawania stopera
-│   └── StopwatchItem/                    # Komponenty stopera (refactored)
-│       ├── index.ts                      # Eksport wszystkich komponentów
-│       ├── StopwatchItem.component.tsx   # Główny komponent stopera
-│       ├── StopwatchCard.component.tsx   # Karta stopera z logiką stylowania
-│       ├── StopwatchHeader.component.tsx # Nagłówek stopera (nazwa + data)
-│       ├── StopwatchTimer.component.tsx  # Odliczanie czasu
-│       ├── StopwatchActions.component.tsx # Przyciski akcji
-│       ├── StopwatchStatusBadge.component.tsx # Badge statusu
-│       ├── StopwatchCompletedMessage.component.tsx # Komunikat ukończenia
-│       └── StopwatchItem.test.tsx        # Testy komponentów stopera
-├── types/              # Definicje typów TypeScript
-│   └── stopwatch.ts    # Typy dla stoperów
+├── components/           # Komponenty React
+│   ├── StopwatchApp/    # Główna aplikacja
+│   ├── StopwatchGrid/   # Siatka stoperów
+│   ├── StopwatchItem/   # Pojedynczy stoper
+│   ├── SharedStopwatch/ # Udostępniony stoper
+│   └── ui/             # Komponenty UI
+├── hooks/              # Custom hooks
 ├── utils/              # Funkcje pomocnicze
-│   └── stopwatch.utils.ts # Utility functions
-├── test/               # Konfiguracja testów
-│   └── setup.ts        # Setup dla testów
-├── App.tsx             # Główny komponent
-├── main.tsx            # Entry point
-└── index.css           # Globalne style
+├── types/              # Definicje TypeScript
+└── test/               # Konfiguracja testów
 ```
 
-## ⏰ Funkcjonalności
+### Kluczowe komponenty
 
-### ✅ Zaimplementowane
-
-- [x] Wyświetlanie listy stoperów w układzie 3 kolumn
-- [x] Dodawanie nowych stoperów z nazwą i datą docelową
-- [x] Usuwanie stoperów
-- [x] Wstrzymywanie/wznawianie stoperów
-- [x] Odliczanie czasu co do milisekundy
-- [x] Responsywny design (mobile, tablet, desktop)
-- [x] Statystyki stoperów (aktywne, wstrzymane, ukończone)
-- [x] Walidacja formularzy
-- [x] Modal dodawania stoperów
-- [x] Komunikaty o ukończeniu stoperów
-- [x] Przykładowe dane do testowania UI
-- [x] Refactoring komponentów zgodnie z najlepszymi praktykami
-
-### 🔄 W trakcie implementacji
-
-- [ ] Przechowywanie w Cookies
-- [ ] Export/import stoperów przez linki
-- [ ] Persystencja danych po zamknięciu przeglądarki
-
-## 🎨 Design
-
-Aplikacja wykorzystuje:
-
-- **Kolory**: Biały i niebieski (zgodnie z wymaganiami)
-- **Layout**: Grid 3 kolumny na desktop, 2 na tablet, 1 na mobile
-- **Responsywność**: Pełna adaptacja do różnych rozmiarów ekranów
-- **UX**: Intuicyjny interfejs z animacjami i przejściami
+- **`StopwatchApp`** - główny komponent aplikacji
+- **`StopwatchGrid`** - układ 3 stoperów w rzędzie z przewijaniem
+- **`GlobalPopup`** - system powiadomień i potwierdzeń
+- **`useStopwatches`** - hook zarządzający stanem stoperów
+- **`useStopwatchActions`** - hook z akcjami CRUD
 
 ## 🧪 Testy
 
-Aplikacja zawiera testy jednostkowe dla:
+### Pokrycie testami
 
-- Głównego komponentu aplikacji
-- Komponentów stopera (refactored)
-- Renderowania UI
-- Interakcji użytkownika
+- **66 testów** - wszystkie przechodzą ✅
+- **Unit testy** - komponenty, hooks, utils
+- **E2E testy** - Playwright dla scenariuszy użytkownika
+- **Testy integracyjne** - cookies, sharing, CRUD operacje
 
-## 🔧 Architektura Komponentów
+### Uruchomienie testów
 
-### StopwatchItem (Refactored)
+```bash
+# Wszystkie testy
+npm test
 
-Komponent został podzielony na mniejsze, reużywalne części:
+# Tylko unit testy
+npm run test:unit
 
-- **StopwatchCard** - Kontener z logiką stylowania
-- **StopwatchHeader** - Nazwa i data docelowa
-- **StopwatchTimer** - Odliczanie czasu z useEffect
-- **StopwatchActions** - Przyciski akcji (wstrzymaj/wznów/usuń)
-- **StopwatchStatusBadge** - Badge statusu
-- **StopwatchCompletedMessage** - Komunikat ukończenia
+# E2E testy
+npm run test:e2e
 
-### Korzyści z Refactoringu
+# Z pokryciem
+npm run test:coverage
+```
 
-- **Single Responsibility Principle** - Każdy komponent ma jedną odpowiedzialność
-- **Reużywalność** - Komponenty mogą być używane w innych miejscach
-- **Testowalność** - Łatwiejsze testowanie pojedynczych komponentów
-- **Czytelność** - Kod jest bardziej czytelny i zrozumiały
-- **Maintainability** - Łatwiejsze utrzymanie i modyfikacja
+## 🐳 Docker
 
-## 📝 Konwencje Commitów
+### Obraz Docker
 
-Projekt używa [Conventional Commits](https://www.conventionalcommits.org/):
+- **Base image**: `node:20-alpine`
+- **Port**: 5173
+- **Volume mounts** - hot reload dla development
+- **Multi-stage build** - optymalizacja rozmiaru
 
-- `feat:` - Nowe funkcjonalności
-- `fix:` - Poprawki błędów
-- `docs:` - Zmiany w dokumentacji
-- `style:` - Zmiany formatowania
-- `refactor:` - Refaktoryzacja kodu
-- `test:` - Dodawanie/zmiany testów
-- `chore:` - Zmiany w build process, dependencies
+### Docker Compose
+
+```yaml
+services:
+  app:
+    build: .
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./src:/app/src # Hot reload
+    restart: unless-stopped
+```
+
+### Docker Hub
+
+Obraz dostępny na Docker Hub:
+
+```bash
+# Pobranie obrazu
+docker pull ol1mowski/stopwatch-app:latest
+
+# Uruchomienie
+docker run -p 5173:5173 ol1mowski/stopwatch-app:latest
+```
+
+**Docker Hub**: ol1mowski/stopwatch-app
+
+## 🔄 CI/CD Pipeline
+
+### GitHub Actions
+
+Automatyczny pipeline dla każdego push/PR:
+
+```yaml
+name: CI/CD Pipeline
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm run test:unit
+      - run: npm run test:e2e
+
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run build
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ol1mowski/stopwatch-app:latest
+```
+
+### Automatyzacja
+
+- **Automatyczne testy** - przy każdym push/PR
+- **Automatyczne budowanie** - po merge do main
+- **Automatyczne push** - do Docker Hub
+- **Automatyczne deployment** - gotowe do wdrożenia
+
+### Status Pipeline
+
+![CI/CD Status](https://github.com/ol1mowski/zadanie_retail24/workflows/CI%2FCD%20Pipeline/badge.svg)
+
+## 📱 Funkcjonalności zgodne z wymaganiami
+
+### ✅ Zrealizowane wymagania
+
+- [x] **Lista stoperów** - odliczanie co do milisekundy
+- [x] **Dodawanie/Usuwanie** - pełne zarządzanie stoperami
+- [x] **Układ 3 stoperów** - poziomy rząd z automatycznym przewijaniem
+- [x] **Formularz dodawania** - data, godzina, nazwa stopera
+- [x] **Komunikaty o zakończeniu** - powiadomienia i możliwość usunięcia
+- [x] **Cookies** - persystencja danych po zamknięciu przeglądarki
+- [x] **Udostępnianie** - linki do współdzielenia stoperów
+
+### 🎨 Dodatkowe funkcje
+
+- **Responsywny design** - optymalizacja dla mobile/desktop
+- **Statystyki** - podsumowanie aktywnych/zakończonych stoperów
+- **Error handling** - obsługa błędów i boundary
+- **SEO** - meta tagi i optymalizacja
+- **Accessibility** - ARIA labels i keyboard navigation
 
 ## 🔧 Konfiguracja
 
-### Git Hooks (Husky)
+### Konfiguracja Vite
 
-- `pre-commit`: Uruchamia lint-staged (ESLint + Prettier)
-- `commit-msg`: Waliduje format commit message
-- `pre-push`: Uruchamia testy przed push
+- **Hot Module Replacement** - szybki development
+- **TypeScript** - pełne wsparcie
+- **Tailwind** - PostCSS processing
+- **Build optimization** - minifikacja i splitting
 
-### ESLint
+## 📊 Metryki jakości
 
-- Konfiguracja dla React + TypeScript
-- Reguły dla najlepszych praktyk
+- **TypeScript** - 100% pokrycie typami
+- **ESLint** - zero błędów i warnings
+- **Prettier** - spójne formatowanie
+- **Testy** - 66 testów, wszystkie przechodzą
+- **Performance** - Lighthouse score > 90
+- **CI/CD** - automatyczny pipeline
+- **Docker** - gotowy do deploymentu
 
-### Prettier
+## 🤝 Contributing
 
-- Automatyczne formatowanie kodu
-- Spójny styl w całym projekcie
+### Konwencje commitów
 
-## 🚀 Deployment
-
-Aplikacja jest gotowa do deploymentu:
-
-```bash
-npm run build
+```
+feat: nowa funkcjonalność
+fix: poprawka błędu
+test: dodanie testów
+docs: aktualizacja dokumentacji
+refactor: refaktoryzacja kodu
 ```
 
-Pliki produkcyjne znajdują się w katalogu `dist/`.
+### Git hooks
+
+- **Husky** - automatyczne sprawdzanie przed commit
+- **Commitlint** - walidacja wiadomości commitów
+- **Lint-staged** - linting tylko zmienionych plików
 
 ## 📄 Licencja
 
-MIT
+Projekt stworzony w ramach zadania rekrutacyjnego Retail24.
+
+---
+
+**Autor**: Oliwier Markiewicz  
+**Technologie**: React 19, TypeScript, Tailwind CSS, Vite  
+**Testy**: Vitest, Playwright  
+**Deployment**: Docker, Docker Hub  
+**CI/CD**: GitHub Actions
