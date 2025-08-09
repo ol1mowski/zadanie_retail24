@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useSharedStopwatch } from './hooks/useSharedStopwatch.hook';
 import { useSharedStopwatchState } from './hooks/useSharedStopwatchState.hook';
 import { useStopwatchActions } from '../../hooks/useStopwatchActions.hook';
@@ -10,6 +11,7 @@ import {
 } from './components';
 
 export const SharedStopwatch: React.FC = () => {
+  const navigate = useNavigate();
   const { sharedStopwatch, isLoading, error, errorType } = useSharedStopwatch();
   const { localStopwatch, setLocalStopwatch } =
     useSharedStopwatchState(sharedStopwatch);
@@ -53,7 +55,7 @@ export const SharedStopwatch: React.FC = () => {
         onRemove={() => {
           if (!sharedStopwatch) return;
           removeStopwatch(sharedStopwatch, () => {
-            window.location.href = '/';
+            navigate('/');
           });
         }}
         onPause={() => {

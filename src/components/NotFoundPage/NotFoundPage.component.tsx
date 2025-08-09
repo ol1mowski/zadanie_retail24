@@ -38,7 +38,7 @@ export const NotFoundPage: React.FC = () => {
             <Button
               variant="secondary"
               size="lg"
-              onClick={() => window.history.back()}
+              onClick={() => navigate(-1)}
               className="w-full sm:w-auto px-8 py-3"
             >
               Wróć do poprzedniej strony

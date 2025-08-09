@@ -29,7 +29,6 @@ export const SharedStopwatchContent: React.FC<SharedStopwatchContentProps> = ({
         description={`Udostępniony stoper: ${stopwatch.name}. Status: ${stopwatch.status === 'active' ? 'aktywny' : stopwatch.status === 'paused' ? 'wstrzymany' : 'zakończony'}.`}
         ogTitle={`${stopwatch.name} - Udostępniony stoper`}
         ogDescription={`Udostępniony stoper: ${stopwatch.name}`}
-        ogUrl={window.location.href}
         twitterTitle={`${stopwatch.name} - Udostępniony stoper`}
         twitterDescription={`Udostępniony stoper: ${stopwatch.name}`}
       />

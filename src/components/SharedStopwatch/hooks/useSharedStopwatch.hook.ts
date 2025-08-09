@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import type { Stopwatch } from '../../../types/stopwatch.type';
-import { parseShareUrl, decodeStopwatchData } from '../../../utils/share.utils';
+import { decodeStopwatchData } from '../../../utils/share.utils';
 
 export const useSharedStopwatch = () => {
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
   const [sharedStopwatch, setSharedStopwatch] = useState<Stopwatch | null>(
     null
   );
@@ -23,39 +24,31 @@ export const useSharedStopwatch = () => {
       setErrorType(null);
 
       try {
-        const currentUrl = window.location.href;
-
-        if (!currentUrl.includes('/stopwatch/')) {
+        if (!location.pathname.includes('/stopwatch/')) {
           setError('Nieprawidłowy format linku udostępniania');
           setErrorType('invalid_url');
           setIsLoading(false);
           return;
         }
 
-        const parsedUrl = parseShareUrl(currentUrl);
+        const encodedData = new URLSearchParams(location.search).get('data');
+        const stopwatchId = id;
 
-        if (!parsedUrl) {
+        if (!encodedData || !stopwatchId) {
           setError('Link udostępniania jest nieprawidłowy lub uszkodzony');
           setErrorType('invalid_url');
           setIsLoading(false);
           return;
         }
 
-        if (parsedUrl.stopwatchId !== id) {
-          setError('Identyfikator stopera w linku nie zgadza się z URL');
-          setErrorType('invalid_data');
-          setIsLoading(false);
-          return;
-        }
-
-        if (!parsedUrl.encodedData || parsedUrl.encodedData.length < 10) {
+        if (!encodedData || encodedData.length < 10) {
           setError('Dane stopera są nieprawidłowe lub uszkodzone');
           setErrorType('invalid_data');
           setIsLoading(false);
           return;
         }
 
-        const decodedStopwatch = decodeStopwatchData(parsedUrl.encodedData);
+        const decodedStopwatch = decodeStopwatchData(encodedData);
 
         if (decodedStopwatch.id !== id) {
           setError('Dane stopera są nieprawidłowe - ID nie zgadza się');

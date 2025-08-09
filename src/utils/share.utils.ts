@@ -53,9 +53,11 @@ export const isValidStopwatchData = (
   );
 };
 
-export const generateShareLink = (stopwatch: Stopwatch): string => {
+export const generateShareLink = (
+  stopwatch: Stopwatch,
+  baseUrl: string = 'http://localhost:5173'
+): string => {
   const encodedData = encodeStopwatchData(stopwatch);
-  const baseUrl = window.location.origin;
   return `${baseUrl}/stopwatch/${stopwatch.id}?data=${encodedData}`;
 };
 

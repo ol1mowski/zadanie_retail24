@@ -34,7 +34,7 @@ export const StopwatchApp: React.FC = () => {
         keywords="stoper, timer, aplikacja, zarządzanie czasem, udostępnianie"
         ogTitle="Aplikacja Stoperów"
         ogDescription="Zarządzaj swoimi stoperami i udostępniaj je z innymi użytkownikami."
-        ogUrl={window.location.origin}
+        ogUrl="/"
         twitterTitle="Aplikacja Stoperów"
         twitterDescription="Zarządzaj swoimi stoperami i udostępniaj je z innymi użytkownikami."
       />

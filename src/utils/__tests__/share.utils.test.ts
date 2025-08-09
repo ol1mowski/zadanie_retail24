@@ -140,7 +140,8 @@ describe('share.utils', () => {
     });
 
     it('should generate correct share link', () => {
-      const result = generateShareLink(mockStopwatch);
+      const customBaseUrl = 'https://example.com';
+      const result = generateShareLink(mockStopwatch, customBaseUrl);
 
       expect(result).toContain('https://example.com/stopwatch/');
       expect(result).toContain(mockStopwatch.id);

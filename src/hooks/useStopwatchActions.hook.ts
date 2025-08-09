@@ -22,6 +22,8 @@ export const useStopwatchActions = (
   navigate?: () => void
 ) => {
   let routerNavigate: (path?: string) => void;
+  const currentOrigin = 'http://localhost:5173';
+
   try {
     const navigate = useNavigate();
     routerNavigate = (path?: string) => navigate(path || '/');
@@ -120,7 +122,7 @@ export const useStopwatchActions = (
 
   const shareStopwatch = useCallback(
     (stopwatch: Stopwatch) => {
-      const link = generateShareLink(stopwatch);
+      const link = generateShareLink(stopwatch, currentOrigin);
       showPopup(
         'Udostępnij stoper',
         'Link został wygenerowany. Skopiuj go i wyślij znajomym:',
@@ -129,7 +131,7 @@ export const useStopwatchActions = (
         link
       );
     },
-    [showPopup]
+    [showPopup, currentOrigin]
   );
 
   return {

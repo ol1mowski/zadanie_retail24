@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface SEOProps {
   title: string;
@@ -29,12 +30,15 @@ export const SEO: React.FC<SEOProps> = ({
   noIndex = false,
   canonicalUrl,
 }) => {
+  const location = useLocation();
+  const currentPath = `${location.pathname}${location.search}${location.hash}`;
+
   const defaultOgTitle = ogTitle || title;
   const defaultOgDescription = ogDescription || description;
   const defaultTwitterTitle = twitterTitle || title;
   const defaultTwitterDescription = twitterDescription || description;
-  const defaultOgUrl = ogUrl || window.location.href;
-  const defaultCanonicalUrl = canonicalUrl || window.location.href;
+  const defaultOgUrl = ogUrl || currentPath;
+  const defaultCanonicalUrl = canonicalUrl || currentPath;
 
   useEffect(() => {
     document.title = title;
@@ -62,7 +66,6 @@ export const SEO: React.FC<SEOProps> = ({
       meta.setAttribute('content', content);
     };
 
-    // Aktualizuj meta tagi
     updateMetaTag('description', description);
     if (keywords) {
       updateMetaTag('keywords', keywords);

@@ -43,7 +43,7 @@ export const SharedStopwatchError: React.FC<SharedStopwatchErrorProps> = ({
             title={getErrorTitle()}
             message={error}
             type="error"
-            onRetry={() => window.location.reload()}
+            onRetry={() => navigate(0)}
             onClose={() => navigate('/')}
             className="mb-6"
           />
@@ -52,11 +52,7 @@ export const SharedStopwatchError: React.FC<SharedStopwatchErrorProps> = ({
             <Button variant="primary" size="lg" onClick={() => navigate('/')}>
               Przejdź do głównej aplikacji
             </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={() => window.history.back()}
-            >
+            <Button variant="secondary" size="lg" onClick={() => navigate(-1)}>
               Wróć do poprzedniej strony
             </Button>
           </div>
