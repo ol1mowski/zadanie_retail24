@@ -86,7 +86,7 @@ export const useStopwatches = () => {
 
         showPopup('Stoper zakończony!', message, 'success');
       }
-    }, 1000);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [stopwatches, showPopup]);
