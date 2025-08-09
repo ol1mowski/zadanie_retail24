@@ -14,7 +14,7 @@ export const StopwatchCard: React.FC<StopwatchCardProps> = ({
 
   return (
     <div
-      className={`relative p-6 rounded-lg border-2 ${getStatusColor()} shadow-lg transition-all duration-300 hover:shadow-xl`}
+      className={`relative p-6 cursor-pointer rounded-lg border-2 ${getStatusColor()} shadow-lg transition-all duration-300 hover:shadow-xl`}
     >
       {children}
     </div>

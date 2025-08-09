@@ -8,7 +8,13 @@ export const StopwatchList: React.FC<StopwatchGridProps> = ({
 }) => {
   return (
     <div className="w-full">
-      <div className="overflow-y-auto overflow-x-hidden scroll-smooth max-h-[280px]">
+      <div
+        className={`overflow-x-hidden scroll-smooth ${
+          stopwatches.length > 3
+            ? 'overflow-y-auto max-h-[280px]'
+            : 'overflow-y-visible'
+        }`}
+      >
         <div className="p-6">
           <div className="grid grid-cols-3 gap-4 min-h-0">
             {stopwatches.map(stopwatch => (
