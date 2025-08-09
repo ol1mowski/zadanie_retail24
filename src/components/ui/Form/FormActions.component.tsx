@@ -14,7 +14,7 @@ export const FormActions: React.FC<FormActionsProps> = ({
   cancelText,
 }) => {
   return (
-    <div className="flex gap-3 justify-end">
+    <div className="flex gap-3 justify-start">
       <Button
         type="button"
         variant="ghost"

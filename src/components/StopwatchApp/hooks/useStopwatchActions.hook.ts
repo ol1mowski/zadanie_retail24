@@ -14,7 +14,7 @@ import { generateStopwatchId } from '../../../utils/stopwatch.utils';
 export type PopupShowFunction = (
   title: string,
   message: string,
-  type: 'success' | 'confirmation' | 'share',
+  type: 'success' | 'confirmation' | 'share' | 'form',
   onConfirm?: () => void,
   link?: string
 ) => void;

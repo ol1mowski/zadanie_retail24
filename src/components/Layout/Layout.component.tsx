@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { Header } from '../Header/Header.component';
 import { AddStopwatchModal } from '../AddStopwatchModal';
 import { GlobalPopup } from '../ui/GlobalPopup';
-import { useModal } from './hooks/useModal.hook';
 import { StatisticsSection } from '../StatisticsSection/StatisticsSection.component';
 import type { Stopwatch, StopwatchFormData } from '../../types/stopwatch.type';
 
@@ -19,7 +19,7 @@ interface LayoutProps {
     isVisible: boolean;
     title: string;
     message: string;
-    type: 'success' | 'confirmation' | 'share' | 'import';
+    type: 'success' | 'confirmation' | 'share' | 'import' | 'form';
     onClose: () => void;
     onConfirm?: () => void;
     shareLink?: string;
@@ -38,13 +38,16 @@ export const Layout: React.FC<LayoutProps> = ({
   onAddStopwatchModal,
   popupProps,
 }) => {
-  const { isOpen, openModal, closeModal } = useModal();
+  const [isFormPopupOpen, setIsFormPopupOpen] = useState<boolean>(false);
+
+  const openFormPopup = () => setIsFormPopupOpen(true);
+  const closeFormPopup = () => setIsFormPopupOpen(false);
 
   const handleAddStopwatch = () => {
     if (onAddStopwatch) {
       onAddStopwatch();
     } else {
-      openModal();
+      openFormPopup();
     }
   };
 
@@ -74,8 +77,8 @@ export const Layout: React.FC<LayoutProps> = ({
 
       {showModal && (
         <AddStopwatchModal
-          isOpen={isOpen}
-          onClose={closeModal}
+          isOpen={isFormPopupOpen}
+          onClose={closeFormPopup}
           onAdd={onAddStopwatchModal || (() => {})}
         />
       )}

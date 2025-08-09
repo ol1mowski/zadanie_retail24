@@ -1,6 +1,11 @@
 import { useState, useCallback } from 'react';
 
-export type PopupType = 'success' | 'confirmation' | 'share' | 'import';
+export type PopupType =
+  | 'success'
+  | 'confirmation'
+  | 'share'
+  | 'import'
+  | 'form';
 
 export const usePopup = () => {
   const [popupMessage, setPopupMessage] = useState<string>('');
